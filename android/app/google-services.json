@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "913285637155",
+    "firebase_url": "https://vegetable-test-72039.firebaseio.com",
+    "project_id": "vegetable-test-72039",
+    "storage_bucket": "vegetable-test-72039.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913285637155:android:93407370465c593dd23d96",
+        "android_client_info": {
+          "package_name": "com.veggie_market.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913285637155-07j5pu5ah9p86lccesvn5pg0h3d9597s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWMljaZCYYbEmO8v4Pd6hcskKWGE9qrII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913285637155-07j5pu5ah9p86lccesvn5pg0h3d9597s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
