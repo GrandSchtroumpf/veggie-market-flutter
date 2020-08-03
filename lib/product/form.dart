@@ -92,6 +92,7 @@ class ProductForm extends StatelessWidget {
               /// SAVE ///
               RaisedButton(
                 child: Text('Save Product'),
+                color: Theme.of(context).primaryColor,
                 onPressed: () {
                   _formKey.currentState.save();
                   onSubmit(product);

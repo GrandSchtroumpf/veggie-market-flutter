@@ -35,9 +35,9 @@ class App extends StatelessWidget {
     return ServiceProvider(
       child: MaterialApp(
         title: 'Flutter Demo',
-        initialRoute: '/home',
+        initialRoute: '/list',
         routes: {
-          '/home': (ctx) => HomePage(),
+          '/list': (ctx) => ProductList(),
           '/create': (ctx) => CreatePage(),
           '/edit': (ctx) => EditPage(),
         },

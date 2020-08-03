@@ -11,6 +11,15 @@ class EditPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit your Product'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () async {
+              service.remove(id);
+              Navigator.pop(context);
+            },
+          )
+        ],
       ),
       body: FutureBuilder<Product>(
         future: service.getValue(id),

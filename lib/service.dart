@@ -42,13 +42,15 @@ class Service<T> {
 
   Future<T> getValue(String id) async {
     final snapshot = await this.doc(id).get();
-    return converter.fromFirestore(snapshot);
+    return snapshot.exists ? converter.fromFirestore(snapshot) : null;
   }
 
   Stream<List<T>> valueChanges() {
     final stream = collection.snapshots();
     return stream.map((event) {
-      return event.docs.map((s) => converter.fromFirestore(s)).toList();
+      final docs = event.docs;
+      docs.removeWhere((s) => !s.exists);
+      return docs.map((s) => converter.fromFirestore(s)).toList();
     });
   }
 
