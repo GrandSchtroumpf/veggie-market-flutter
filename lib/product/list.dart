@@ -39,7 +39,9 @@ class ProductItem extends StatelessWidget {
         backgroundImage: NetworkImage(product.image ?? productImg),
       ),
       title: Text(product.name),
-      subtitle: Text('${product.price}€/kg - ${product.stock} in stock.'),
+      subtitle: Text(
+        '${product.price}€/${product.unit} - ${product.stock} in stock.',
+      ),
       onTap: () {
         Navigator.pushNamed(context, '/edit', arguments: product.id);
       },

@@ -11,6 +11,7 @@ class Product {
   String id;
   String name;
   String image;
+  String unit;
   File file;
   int price;
   int stock;
@@ -20,6 +21,7 @@ class Product {
     this.id,
     this.image,
     this.file,
+    this.unit,
     this.name = '',
     this.price = 0,
     this.stock = 0,
@@ -37,6 +39,7 @@ class ProductConverter extends Converter<Product> {
       name: data['name'] ?? '',
       price: data['price'] ?? 0,
       stock: data['stock'] ?? 0,
+      unit: data['unit'],
     );
   }
 
@@ -46,7 +49,8 @@ class ProductConverter extends Converter<Product> {
       'name': data.name,
       'image': data.image,
       'price': data.price,
-      'stock': data.stock
+      'stock': data.stock,
+      'unit': data.unit,
     };
   }
 }
