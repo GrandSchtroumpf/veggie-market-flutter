@@ -38,7 +38,7 @@ class EditPage extends StatelessWidget {
                 final snapshot = await task.onComplete;
                 product.image = await snapshot.ref.getDownloadURL();
               }
-              service.update(id, product);
+              await service.update(id, product);
               Navigator.pop(context);
             },
           );

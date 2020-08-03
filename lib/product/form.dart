@@ -24,7 +24,7 @@ class ProductForm extends StatelessWidget {
               ImgFormField(
                 initialValue: ImgForm(product.image),
                 onSaved: (ImgForm imgForm) {
-                  product.file = product.file;
+                  product.file = imgForm.file;
                   product.image = imgForm.url;
                 },
               ),

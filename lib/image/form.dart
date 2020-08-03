@@ -20,7 +20,7 @@ class ImgFormField extends FormField<ImgForm> {
             validator: validator,
             initialValue: initialValue,
             autovalidate: autovalidate,
-            builder: (FormFieldState<ImgForm> field) => ImgFormWidget(field));
+            builder: (FormFieldState<ImgForm> state) => ImgFormWidget(state));
 }
 
 class ImgFormWidget extends StatelessWidget {
@@ -42,7 +42,7 @@ class ImgFormWidget extends StatelessWidget {
       );
     } else {
       return PickImage(
-        onPicked: (img) {
+        onPicked: (File img) {
           form.file = img;
           state.didChange(form);
         },

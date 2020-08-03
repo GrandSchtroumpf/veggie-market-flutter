@@ -38,7 +38,7 @@ class DisplayImage extends StatelessWidget {
 
 class PickImage extends StatelessWidget {
   final imgPicker = ImagePicker();
-  final Function onPicked;
+  final Function(File) onPicked;
   PickImage({this.onPicked});
 
   _pick(ImageSource source) async {
