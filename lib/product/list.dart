@@ -15,29 +15,38 @@ class ProductList extends StatelessWidget {
           if (snapshot.hasError) {
             return Text('An error occured ' + snapshot.error);
           }
+
+          /// LOADING ///
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           }
+
+          /// EMPTY ///
           if (snapshot.data.length == 0) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Text(
+                    'You list is empty',
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
                   SvgPicture.asset(
                     'assets/img/empty.svg',
                     semanticsLabel: 'No product',
                     width: 300.0,
                   ),
-                  RaisedButton(
-                    child: Text('Add your first Product'),
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () => Navigator.pushNamed(context, '/create'),
-                  )
+                  Text(
+                    'Click on the + button below to create a product.',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
                 ],
               ),
             );
           }
+
+          /// LIST ///
           final docs = snapshot.data;
           return ListView.builder(
             itemCount: docs.length,
