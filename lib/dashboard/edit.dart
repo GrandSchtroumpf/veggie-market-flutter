@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../service.dart';
-import './model.dart';
-import './form.dart';
+import '../product/model.dart';
+import '../product/form.dart';
 
 class EditPage extends StatelessWidget {
   @override

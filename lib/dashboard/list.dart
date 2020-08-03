@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../service.dart';
-import './model.dart';
+import '../product/model.dart';
 
 class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
     return Scaffold(
-      appBar: AppBar(title: Text('Home')),
+      appBar: AppBar(title: Text('Dashboard')),
       body: StreamBuilder<List<Product>>(
         stream: service.valueChanges(),
         builder: (context, snapshot) {

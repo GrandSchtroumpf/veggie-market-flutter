@@ -3,7 +3,7 @@ import '../router.dart';
 import './login.dart';
 
 final authRoutes = NavigatorOptions(
-  label: 'auth',
+  label: 'Profile',
   icon: Icons.person,
   canDisplay: (context) => true,
   canActivate: (context) => true,

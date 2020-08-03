@@ -69,7 +69,7 @@ class ProductItem extends StatelessWidget {
         '${product.price}€/${product.unit} - ${product.stock} in stock.',
       ),
       onTap: () {
-        Navigator.pushNamed(context, '/edit', arguments: product.id);
+        Navigator.pushNamed(context, '/view', arguments: product.id);
       },
     );
   }

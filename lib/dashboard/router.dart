@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../product/list.dart';
-import '../product/create.dart';
-import '../product/edit.dart';
+import 'list.dart';
+import 'create.dart';
+import 'edit.dart';
 
 import '../router.dart';
 
 final dashboardRoutes = NavigatorOptions(
-  label: 'dashboard',
+  label: 'Dashboard',
   icon: Icons.dashboard,
   canDisplay: (context) => true,
   canActivate: (context) => true,
