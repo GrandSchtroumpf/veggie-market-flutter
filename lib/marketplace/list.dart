@@ -8,7 +8,7 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
     return Scaffold(
-      appBar: AppBar(title: Text('Home')),
+      appBar: AppBar(title: Text('Shopping list')),
       body: StreamBuilder<List<Product>>(
         stream: service.valueChanges(),
         builder: (context, snapshot) {

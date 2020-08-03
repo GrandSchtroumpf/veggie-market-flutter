@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import '../service.dart';
-import '../product/model.dart';
+import '../product/view.shell.dart';
 
 class ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context).settings.arguments;
-    final service = ServiceProvider.of(context).product;
-    return FutureBuilder(
-      future: service.getValue(id),
-      builder: (context, snapshot) {
-        Product product = snapshot.data;
+    return ProductViewShell(
+      builder: (context, product) {
         return Scaffold(
           appBar: AppBar(
             title: Text(product.name),
