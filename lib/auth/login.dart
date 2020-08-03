@@ -7,6 +7,9 @@ class Login extends StatelessWidget {
       appBar: AppBar(
         title: Text('Login'),
       ),
+      body: Center(
+        child: Text('Not Implemented yet.'),
+      ),
     );
   }
 }
