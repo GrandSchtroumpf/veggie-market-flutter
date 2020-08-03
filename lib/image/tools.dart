@@ -9,32 +9,23 @@ import 'package:image_cropper/image_cropper.dart';
 
 class DisplayImage extends StatelessWidget {
   final String url;
+  final File file;
   final Function onEdit;
-  final Function onDelete;
-  DisplayImage({this.url, this.onEdit, this.onDelete});
+  DisplayImage({this.url, this.file, this.onEdit});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.network(
-          url,
+        Image(
+          image: url != null ? NetworkImage(url) : FileImage(file),
           width: 200.0,
           height: 200.0,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            FlatButton(
-              child: Icon(Icons.edit),
-              onPressed: onEdit,
-            ),
-            FlatButton(
-              child: Icon(Icons.delete),
-              onPressed: onDelete,
-            ),
-          ],
+        IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: onEdit,
         ),
       ],
     );
@@ -53,7 +44,15 @@ class PickImage extends StatelessWidget {
   _pick(ImageSource source) async {
     PickedFile file = await imgPicker.getImage(source: source);
     if (file != null) {
-      onPicked(File(file.path));
+      File img = await ImageCropper.cropImage(
+        sourcePath: file.path,
+        aspectRatioPresets: [CropAspectRatioPreset.square],
+        maxWidth: 512,
+        maxHeight: 512,
+      );
+      if (img != null) {
+        onPicked(File(img.path));
+      }
     }
   }
 
@@ -76,54 +75,6 @@ class PickImage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.photo_camera),
               onPressed: () => _pick(ImageSource.camera),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-////////////
-/// CROP ///
-////////////
-
-class CropImage extends StatelessWidget {
-  final File file;
-  final Function onCropped;
-  final Function onCancel;
-  CropImage({this.file, this.onCropped, this.onCancel});
-
-  _crop() async {
-    File img = await ImageCropper.cropImage(
-      sourcePath: file.path,
-      aspectRatioPresets: [CropAspectRatioPreset.square],
-      maxWidth: 512,
-      maxHeight: 512,
-    );
-    onCropped(img);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.file(
-          file,
-          width: 200.0,
-          height: 200.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            FlatButton(
-              child: Icon(Icons.crop),
-              onPressed: _crop,
-            ),
-            FlatButton(
-              child: Icon(Icons.refresh),
-              onPressed: onCancel,
             ),
           ],
         ),

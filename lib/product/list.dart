@@ -7,54 +7,48 @@ class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
-    return StreamBuilder<List<Product>>(
-      initialData: [],
-      stream: service.valueChanges(),
-      builder: (context, snapshot) {
-        Widget body;
-        Widget actionButton = SizedBox.shrink(); // Empty
-        if (snapshot.hasError) {
-          body = Text('An error occured ' + snapshot.error);
-        }
-        if (!snapshot.hasData) {
-          body = Center(child: CircularProgressIndicator());
-        }
-        final docs = snapshot.data;
-        if (snapshot.data.length == 0) {
-          body = Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/img/empty.svg',
-                  semanticsLabel: 'No product',
-                  width: 300.0,
-                ),
-                RaisedButton(
-                  child: Text('Add your first Product'),
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () => Navigator.pushNamed(context, '/create'),
-                )
-              ],
-            ),
-          );
-        } else {
-          body = ListView.builder(
+    return Scaffold(
+      appBar: AppBar(title: Text('Home')),
+      body: StreamBuilder<List<Product>>(
+        stream: service.valueChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('An error occured ' + snapshot.error);
+          }
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.data.length == 0) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/img/empty.svg',
+                    semanticsLabel: 'No product',
+                    width: 300.0,
+                  ),
+                  RaisedButton(
+                    child: Text('Add your first Product'),
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () => Navigator.pushNamed(context, '/create'),
+                  )
+                ],
+              ),
+            );
+          }
+          final docs = snapshot.data;
+          return ListView.builder(
             itemCount: docs.length,
             itemBuilder: (context, i) => ProductItem(docs[i]),
           );
-          actionButton = FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () => Navigator.pushNamed(context, '/create'),
-          );
-        }
-        return Scaffold(
-          appBar: AppBar(title: Text('Home')),
-          body: body,
-          floatingActionButton: actionButton,
-        );
-      },
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => Navigator.pushNamed(context, '/create'),
+      ),
     );
   }
 }

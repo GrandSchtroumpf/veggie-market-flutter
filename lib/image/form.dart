@@ -5,8 +5,6 @@ import 'tools.dart';
 class ImgForm {
   String url;
   File file;
-  bool deleted = false;
-  bool editing = false;
 
   ImgForm(this.url);
 }
@@ -29,34 +27,26 @@ class ImgFormWidget extends StatelessWidget {
   final FormFieldState<ImgForm> state;
   ImgFormWidget(this.state);
 
-  get form {
-    return state.value;
-  }
-
-  change(Function applyChanges) {
-    final value = form;
-    applyChanges(value);
-    state.didChange(value);
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (form.url != null && !form.editing && !form.deleted) {
+    final form = state.value;
+    if (form.url != null || form.file != null) {
       return DisplayImage(
         url: form.url,
-        onDelete: () => change((value) => form.deleted = true),
-        onEdit: () => change((value) => value.editing = true),
+        file: form.file,
+        onEdit: () {
+          form.url = null;
+          form.file = null;
+          state.didChange(form);
+        },
       );
-    }
-    if (form.file == null) {
+    } else {
       return PickImage(
-        onPicked: (img) => change((value) => value.file = img),
+        onPicked: (img) {
+          form.file = img;
+          state.didChange(form);
+        },
       );
     }
-    return CropImage(
-      file: form.file,
-      onCancel: () => change((value) => value.file = null),
-      onCropped: (img) => change((value) => value.file = img),
-    );
   }
 }
