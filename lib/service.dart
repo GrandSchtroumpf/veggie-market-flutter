@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
 import './product/model.dart';
 
@@ -64,11 +65,14 @@ class Service<T> {
 /// Provide the list of service for the app
 /// Create the service only on demand
 class ServiceProvider extends InheritedWidget {
+  final trace = FirebasePerformance.instance.newTrace("test_trace");
   final product = Service<Product>('products', ProductConverter());
   final Map<String, Service> services = {};
 
   ServiceProvider({Key key, @required Widget child})
-      : super(key: key, child: child);
+      : super(key: key, child: child) {
+    trace.start();
+  }
 
   static ServiceProvider of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ServiceProvider>();
