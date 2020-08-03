@@ -60,6 +60,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final service = ServiceProvider.of(context).product;
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(product.image ?? productImg),
@@ -67,6 +68,13 @@ class ProductItem extends StatelessWidget {
       title: Text(product.name),
       subtitle: Text(
         '${product.price}€/${product.unit} - ${product.stock} in stock.',
+      ),
+      trailing: IconButton(
+        onPressed: () {
+          product.stock = product.stock - 1;
+          service.update(product.id, product);
+        },
+        icon: Icon(Icons.add),
       ),
       onTap: () {
         Navigator.pushNamed(context, '/view', arguments: product.id);

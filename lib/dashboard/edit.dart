@@ -12,7 +12,7 @@ class EditPage extends StatelessWidget {
     return ProductViewShell(builder: (context, product) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Edit your Product'),
+          title: Text('Modify ${product.name}'),
           actions: [
             IconButton(
               icon: Icon(Icons.delete),

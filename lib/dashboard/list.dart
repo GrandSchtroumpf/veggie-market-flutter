@@ -76,6 +76,7 @@ class ProductItem extends StatelessWidget {
       subtitle: Text(
         '${product.price}€/${product.unit} - ${product.stock} in stock.',
       ),
+      trailing: Icon(Icons.edit),
       onTap: () {
         Navigator.pushNamed(context, '/edit', arguments: product.id);
       },
