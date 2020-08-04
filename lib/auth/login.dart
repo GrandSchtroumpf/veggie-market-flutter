@@ -90,7 +90,7 @@ class Login extends StatelessWidget {
                       email: _form.email,
                       password: _form.password,
                     );
-                    Navigator.pop(context);
+                    Navigator.pop(context, _form.email);
                   },
                 ),
               ]),
@@ -110,7 +110,7 @@ class Login extends StatelessWidget {
                         email: _form.email,
                         password: _form.password,
                       );
-                      Navigator.pop(context);
+                      Navigator.pop(context, _form.email);
                     }
                   },
                 ),

@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import '../market/order.dart';
 import '../product/model.dart';
 import './model.dart';
 
@@ -32,13 +35,29 @@ class Bucket {
     }
   }
 
-  createOrder(String name) {
+  clear() {
+    items.forEach((key, value) => items[key] = null);
+    _ctrl.add(items);
+  }
+
+  createOrder(BuildContext context) async {
+    String email;
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    if (user != null) {
+      email = user.email;
+    } else {
+      email = await showDialog(
+        context: context,
+        builder: (context) => OrderPage(),
+      );
+    }
+    if (email == null) {}
     final List<OrderItem> orderItems = [];
     items.forEach((key, value) {
       if (value != 0) {
         orderItems.add(OrderItem(key, value));
       }
     });
-    return Order(name, orderItems);
+    return Order(email: email, items: orderItems);
   }
 }

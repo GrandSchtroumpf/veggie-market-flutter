@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../product/model.dart';
+import '../order/model.dart';
 import '../service.dart';
 import './item.dart';
 
@@ -9,9 +10,10 @@ class MarketBucket extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bucket = ServiceProvider.of(context).bucket;
-    final product = ServiceProvider.of(context).product;
+    final productService = ServiceProvider.of(context).product;
+    final orderService = ServiceProvider.of(context).order;
     return FutureBuilder<List<Product>>(
-      future: product.getMany(bucket.items.keys.toList()),
+      future: productService.getMany(bucket.items.keys.toList()),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
@@ -59,12 +61,19 @@ class MarketBucket extends StatelessWidget {
           floatingActionButton: FloatingActionButton.extended(
             label: Text('Send order'),
             icon: Icon(Icons.send),
-            onPressed: () {
-              final snackBar = SnackBar(
-                content: Text('Order will be processed in next version 😉'),
-                duration: Duration(seconds: 3),
-              );
-              _key.currentState.showSnackBar(snackBar);
+            onPressed: () async {
+              Order order = await bucket.createOrder(context);
+              if (order != null) {
+                await orderService.create(order);
+                bucket.clear();
+                Navigator.pop(context);
+              } else {
+                final snackBar = SnackBar(
+                  content: Text('Could not send order.'),
+                  duration: Duration(seconds: 3),
+                );
+                _key.currentState.showSnackBar(snackBar);
+              }
             },
           ),
           floatingActionButtonLocation:
