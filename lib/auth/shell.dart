@@ -13,6 +13,25 @@ class AuthShell extends StatelessWidget {
 
   AuthShell({this.title, this.body, this.floatingActionButton});
 
+  loginButton(BuildContext context) {
+    return IconButton(
+      onPressed: () => showDialog(
+        context: context,
+        child: Login(),
+      ),
+      icon: Icon(Icons.account_circle),
+    );
+  }
+
+  avatarButton(FirebaseUser user) {
+    return Center(
+      child: GestureDetector(
+        onTap: () => _key.currentState.openDrawer(),
+        child: avatar(user),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<FirebaseUser>(
@@ -21,42 +40,15 @@ class AuthShell extends StatelessWidget {
         if (snapshot.hasError) {
           return Text('An error occured ' + snapshot.error.toString());
         }
-
-        /// NO USER ///
-        if (!snapshot.hasData) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(title),
-              leading: IconButton(
-                onPressed: () => showDialog(
-                  context: context,
-                  child: Login(),
-                ),
-                icon: Icon(Icons.account_circle),
-              ),
-            ),
-            body: body,
-            floatingActionButton: floatingActionButton,
-          );
-        }
-
-        /// WITH USER ///
         FirebaseUser user = snapshot.data;
         return Scaffold(
           key: _key,
           appBar: AppBar(
-            leading: Center(
-              child: GestureDetector(
-                onTap: () => _key.currentState.openDrawer(),
-                child: avatar(user),
-              ),
-            ),
             title: Text(title),
-          ),
-          drawer: Drawer(
-            child: AuthDrawer(user),
+            leading: user != null ? avatarButton(user) : loginButton(context),
           ),
           body: body,
+          drawer: user != null ? AuthDrawer(user) : SizedBox.shrink(),
           floatingActionButton: floatingActionButton,
         );
       },
