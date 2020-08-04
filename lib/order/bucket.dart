@@ -31,12 +31,15 @@ class Bucket {
   void setAmount(Product product, int amount) {
     if (product.stock - amount >= 0) {
       items[product.id] = amount;
+      if (amount == 0) {
+        items.remove(product.id);
+      }
       _ctrl.add(items);
     }
   }
 
   clear() {
-    items.forEach((key, value) => items[key] = null);
+    items.clear();
     _ctrl.add(items);
   }
 

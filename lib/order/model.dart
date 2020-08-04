@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../service.dart';
@@ -23,6 +25,11 @@ class OrderItem {
   int amount;
 
   OrderItem(this.productId, this.amount);
+  OrderItem.fromJson(Map<String, dynamic> item)
+      : productId = item['productId'],
+        amount = item['amount'];
+
+  Map<String, dynamic> toJson() => {'productId': productId, 'amount': amount};
 }
 
 class OrderConverter extends Converter<Order> {
@@ -32,7 +39,7 @@ class OrderConverter extends Converter<Order> {
     return Order(
       ref: snapshot.reference,
       id: snapshot.id,
-      items: data['items'],
+      items: jsonDecode(data['items']), // TODO: make it work normally
       time: data['time'],
       email: data['email'],
     );
@@ -43,7 +50,7 @@ class OrderConverter extends Converter<Order> {
     return {
       'email': data.email,
       'time': data.time,
-      'items': data.items,
+      'items': jsonEncode(data.items),
     };
   }
 }

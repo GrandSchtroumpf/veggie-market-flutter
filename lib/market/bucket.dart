@@ -65,8 +65,8 @@ class MarketBucket extends StatelessWidget {
               Order order = await bucket.createOrder(context);
               if (order != null) {
                 await orderService.create(order);
-                bucket.clear();
                 Navigator.pop(context);
+                bucket.clear();
               } else {
                 final snackBar = SnackBar(
                   content: Text('Could not send order.'),
@@ -90,12 +90,16 @@ class TotalPrice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bucket = ServiceProvider.of(context).bucket;
-    return StreamBuilder(
+    return StreamBuilder<Map<String, int>>(
       initialData: bucket.items,
       stream: bucket.stream,
       builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Text('Total: 0€');
+        }
+        Map<String, int> items = snapshot.data;
         double total = products
-            .map((product) => product.price * snapshot.data[product.id])
+            .map((product) => product.price * (items[product.id] ?? 0))
             .reduce((sum, price) => sum + price);
         return Center(
           child: Text(

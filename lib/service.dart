@@ -10,7 +10,8 @@ import './product/model.dart';
 
 abstract class Converter<T> {
   T fromFirestore(DocumentSnapshot snapshot);
-  Map<String, dynamic> toFirestore(T data);
+  dynamic toFirestore(T data);
+  // Map<String, dynamic> toFirestore(T data);
 }
 
 /// A base service class
