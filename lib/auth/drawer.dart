@@ -10,9 +10,6 @@ class AuthDrawer extends StatelessWidget {
   AuthDrawer(this.user);
   @override
   Widget build(BuildContext context) {
-    if (user == null) {
-      Navigator.pop(context);
-    }
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -35,7 +32,7 @@ class AuthDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.dashboard),
-            title: Text('Dashboard'),
+            title: Text('My products'),
             onTap: () => Navigator.pushReplacementNamed(context, '/d/list'),
           ),
           ListTile(
@@ -46,7 +43,10 @@ class AuthDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Signout'),
-            onTap: () => _auth.signOut(),
+            onTap: () {
+              Navigator.pop(context);
+              _auth.signOut();
+            },
           ),
         ],
       ),

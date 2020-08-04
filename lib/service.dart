@@ -46,6 +46,10 @@ class Service<T> {
     return snapshot.exists ? converter.fromFirestore(snapshot) : null;
   }
 
+  Future<List<T>> getMany(List<String> ids) async {
+    return Future.wait(ids.map((id) => getValue(id)));
+  }
+
   Stream<List<T>> valueChanges() {
     final stream = collection.snapshots();
     return stream.map((event) {
