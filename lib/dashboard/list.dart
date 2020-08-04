@@ -2,21 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../service.dart';
 import '../product/model.dart';
-import '../auth/button.dart';
-import '../auth/drawer.dart';
+import '../auth/shell.dart';
 
 class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
-    return Scaffold(
-      appBar: AppBar(
-        leading: AuthButton(),
-        title: Text('Dashboard'),
-      ),
-      drawer: Drawer(
-        child: AuthDrawer(),
-      ),
+    return AuthShell(
+      title: 'Dashboard',
       body: StreamBuilder<List<Product>>(
         stream: service.valueChanges(),
         builder: (context, snapshot) {

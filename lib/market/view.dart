@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../product/view.shell.dart';
 
-class ProductView extends StatelessWidget {
+class MarketView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProductViewShell(

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:veggie_market/auth/shell.dart';
 import '../service.dart';
 import '../product/model.dart';
 
-class ProductMarketList extends StatelessWidget {
+class MarketList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
-    return Scaffold(
-      appBar: AppBar(title: Text('Shopping list')),
+    return AuthShell(
+      title: 'Market',
       body: StreamBuilder<List<Product>>(
         stream: service.valueChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('An error occured ' + snapshot.error);
+            return Text('An error occured ' + snapshot.error.toString());
           }
 
           /// LOADING ///
@@ -77,7 +78,7 @@ class ProductItem extends StatelessWidget {
         icon: Icon(Icons.add),
       ),
       onTap: () {
-        Navigator.pushNamed(context, '/view', arguments: product.id);
+        Navigator.pushNamed(context, '/m/view', arguments: product.id);
       },
     );
   }
