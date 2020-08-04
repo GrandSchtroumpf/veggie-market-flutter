@@ -41,7 +41,7 @@ class AuthDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.shopping_basket),
             title: Text('Market'),
-            onTap: () => Navigator.pushReplacementNamed(context, '/d/list'),
+            onTap: () => Navigator.pushReplacementNamed(context, '/m/list'),
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app),
