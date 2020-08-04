@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:veggie_market/auth/shell.dart';
+import 'package:badges/badges.dart';
 import '../service.dart';
 import '../product/model.dart';
 
@@ -8,6 +9,7 @@ class MarketList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
+    final bucket = ServiceProvider.of(context).bucket;
     return AuthShell(
       title: 'Market',
       body: StreamBuilder<List<Product>>(
@@ -51,6 +53,17 @@ class MarketList extends StatelessWidget {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/m/bucket'),
+        child: Badge(
+          badgeContent: StreamBuilder<Map<String, int>>(
+            initialData: {},
+            stream: bucket.stream,
+            builder: (ctx, snapshot) => Text(snapshot.data.length.toString()),
+          ),
+          child: Icon(Icons.shopping_basket),
+        ),
+      ),
     );
   }
 }
@@ -62,6 +75,7 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
+    final bucket = ServiceProvider.of(context).bucket;
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(product.image ?? productImg),
@@ -75,7 +89,10 @@ class ProductItem extends StatelessWidget {
           product.stock = product.stock - 1;
           service.update(product.id, product);
         },
-        icon: Icon(Icons.add),
+        icon: IconButton(
+          onPressed: () => bucket.add(product),
+          icon: Icon(Icons.add),
+        ),
       ),
       onTap: () {
         Navigator.pushNamed(context, '/m/view', arguments: product.id);

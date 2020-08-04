@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import './market/list.dart';
 import './market/view.dart';
+import './market/bucket.dart';
 import './dashboard/list.dart';
 import './dashboard/create.dart';
 import './dashboard/edit.dart';
@@ -43,6 +44,7 @@ class App extends StatelessWidget {
         routes: {
           '/login': (ctx) => Login(),
           '/profile': (ctx) => Profile(),
+          '/m/bucket': (ctx) => MarketBucket(),
           '/m/list': (ctx) => MarketList(),
           '/m/view': (ctx) => MarketView(),
           '/d/list': (ctx) => ProductList(),

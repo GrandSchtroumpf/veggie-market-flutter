@@ -4,6 +4,7 @@ import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import './order/bucket.dart';
 import './product/model.dart';
 
 abstract class Converter<T> {
@@ -65,10 +66,11 @@ class Service<T> {
 /// Create the service only on demand
 class ServiceProvider extends InheritedWidget {
   final product = Service<Product>('products', ProductConverter());
+  final bucket = Bucket();
   final Map<String, Service> services = {};
 
   ServiceProvider({Key key, @required Widget child})
-      : super(key: key, child: child) {}
+      : super(key: key, child: child);
 
   static ServiceProvider of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ServiceProvider>();

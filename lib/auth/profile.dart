@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import './avatar.dart';
 
 class Profile extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -18,10 +19,7 @@ class Profile extends StatelessWidget {
           ),
           body: Column(
             children: [
-              user.photoUrl != null
-                  ? Image.network(user.photoUrl)
-                  : Image.asset('assets/img/avatar.png'),
-              Text(user.displayName),
+              avatar(user),
               Text(user.email),
             ],
           ),
