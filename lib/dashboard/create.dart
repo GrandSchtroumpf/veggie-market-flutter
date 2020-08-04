@@ -3,7 +3,7 @@ import '../service.dart';
 import '../product/model.dart';
 import '../product/form.dart';
 
-class CreatePage extends StatelessWidget {
+class ProductCreate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;

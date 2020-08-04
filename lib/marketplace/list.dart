@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../service.dart';
 import '../product/model.dart';
 
-class ProductList extends StatelessWidget {
+class ProductMarketList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;

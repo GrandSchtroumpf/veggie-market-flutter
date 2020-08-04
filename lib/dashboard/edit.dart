@@ -4,7 +4,7 @@ import '../product/view.shell.dart';
 import '../product/model.dart';
 import '../product/form.dart';
 
-class EditPage extends StatelessWidget {
+class ProductEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;

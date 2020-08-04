@@ -48,7 +48,7 @@ class ProductForm extends StatelessWidget {
                   hintText: '€ / unit',
                 ),
                 keyboardType: TextInputType.number,
-                onSaved: (String price) => product.price = int.parse(price),
+                onSaved: (String price) => product.price = double.parse(price),
               ),
 
               /// STOCK ///
@@ -90,7 +90,6 @@ class ProductForm extends StatelessWidget {
                 onPressed: () {
                   _formKey.currentState.save();
                   onSubmit(product);
-                  _formKey.currentState.reset();
                 },
               ),
             ],

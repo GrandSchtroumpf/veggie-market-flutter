@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../service.dart';
 import '../product/model.dart';
+import '../auth/button.dart';
+import '../auth/drawer.dart';
 
 class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
     return Scaffold(
-      appBar: AppBar(title: Text('Dashboard')),
+      appBar: AppBar(
+        leading: AuthButton(),
+        title: Text('Dashboard'),
+      ),
+      drawer: Drawer(
+        child: AuthDrawer(),
+      ),
       body: StreamBuilder<List<Product>>(
         stream: service.valueChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('An error occured ' + snapshot.error);
+            return Text('An error occured ' + snapshot.error.toString());
           }
 
           /// LOADING ///
@@ -56,7 +64,7 @@ class ProductList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => Navigator.pushNamed(context, '/create'),
+        onPressed: () => Navigator.pushNamed(context, '/d/create'),
       ),
     );
   }
@@ -78,7 +86,7 @@ class ProductItem extends StatelessWidget {
       ),
       trailing: Icon(Icons.edit),
       onTap: () {
-        Navigator.pushNamed(context, '/edit', arguments: product.id);
+        Navigator.pushNamed(context, '/d/edit', arguments: product.id);
       },
     );
   }

@@ -13,7 +13,7 @@ class Product {
   String image;
   String unit;
   File file;
-  int price;
+  double price;
   int stock;
 
   Product({
@@ -23,7 +23,7 @@ class Product {
     this.file,
     this.unit,
     this.name = '',
-    this.price = 0,
+    this.price = 0.0,
     this.stock = 0,
   });
 }
@@ -37,7 +37,7 @@ class ProductConverter extends Converter<Product> {
       id: snapshot.id,
       image: data['image'],
       name: data['name'] ?? '',
-      price: data['price'] ?? 0,
+      price: data['price'] ?? 0.0,
       stock: data['stock'] ?? 0,
       unit: data['unit'],
     );

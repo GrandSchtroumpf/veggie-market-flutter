@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import './auth/router.dart';
-import './marketplace/router.dart';
-import './dashboard/router.dart';
-import './router.dart';
+import './dashboard/list.dart';
+import './dashboard/create.dart';
+import './dashboard/edit.dart';
+import './auth/login.dart';
+import './auth/profile.dart';
 import './service.dart';
 
 void main() {
@@ -36,11 +37,14 @@ class App extends StatelessWidget {
     return ServiceProvider(
       child: MaterialApp(
         title: 'Flutter Demo',
-        home: Shell([
-          marketplaceRoutes,
-          authRoutes,
-          dashboardRoutes,
-        ]),
+        initialRoute: '/d/list',
+        routes: {
+          '/login': (ctx) => Login(),
+          '/profile': (ctx) => Profile(),
+          '/d/list': (ctx) => ProductList(),
+          '/d/create': (ctx) => ProductCreate(),
+          '/d/edit': (ctx) => ProductEdit(),
+        },
         theme: ThemeData(
           primarySwatch: Colors.lightGreen,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -50,50 +54,50 @@ class App extends StatelessWidget {
   }
 }
 
-class Shell extends StatefulWidget {
-  final List<NavigatorOptions> options;
-  Shell(this.options);
-  @override
-  createState() => ShellState(options);
-}
+// class Shell extends StatefulWidget {
+//   final List<NavigatorOptions> options;
+//   Shell(this.options);
+//   @override
+//   createState() => ShellState(options);
+// }
 
-class ShellState extends State<Shell> {
-  final List<NavigatorOptions> options;
-  int currentIndex = 0;
-  ShellState(this.options);
+// class ShellState extends State<Shell> {
+//   final List<NavigatorOptions> options;
+//   int currentIndex = 0;
+//   ShellState(this.options);
 
-  /// Create a navigator Widget based on an option ///
-  getNavigator(NavigatorOptions option) {
-    return Navigator(
-      key: GlobalKey<NavigatorState>(debugLabel: option.label),
-      onGenerateRoute: (setting) {
-        String name = option.routes.containsKey(setting.name)
-            ? setting.name
-            : '/not-found';
-        return MaterialPageRoute(
-          builder: option.routes[name],
-          maintainState: true,
-          settings: setting,
-        );
-      },
-    );
-  }
+//   /// Create a navigator Widget based on an option ///
+//   getNavigator(NavigatorOptions option) {
+//     return Navigator(
+//       key: GlobalKey<NavigatorState>(debugLabel: option.label),
+//       onGenerateRoute: (setting) {
+//         String name = option.routes.containsKey(setting.name)
+//             ? setting.name
+//             : '/not-found';
+//         return MaterialPageRoute(
+//           builder: option.routes[name],
+//           maintainState: true,
+//           settings: setting,
+//         );
+//       },
+//     );
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    options.removeWhere((option) => !option.canDisplay(context));
-    return Scaffold(
-      body: getNavigator(options[currentIndex]),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        items: options.map((option) {
-          return BottomNavigationBarItem(
-            icon: Icon(option.icon),
-            title: Text(option.label),
-          );
-        }).toList(),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     options.removeWhere((option) => !option.canDisplay(context));
+//     return Scaffold(
+//       body: getNavigator(options[currentIndex]),
+//       bottomNavigationBar: BottomNavigationBar(
+//         currentIndex: currentIndex,
+//         onTap: (index) => setState(() => currentIndex = index),
+//         items: options.map((option) {
+//           return BottomNavigationBarItem(
+//             icon: Icon(option.icon),
+//             title: Text(option.label),
+//           );
+//         }).toList(),
+//       ),
+//     );
+//   }
+// }
