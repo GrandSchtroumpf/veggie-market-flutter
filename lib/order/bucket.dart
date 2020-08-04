@@ -11,22 +11,23 @@ class Bucket {
     return _ctrl.stream;
   }
 
+  Stream<int> queryItem(String productId) {
+    return stream.map((items) => items[productId] ?? 0).distinct();
+  }
+
   add(Product product) {
-    if (product.stock != 0) {
-      product.stock--;
-      if (items[product.id] == null) {
-        items[product.id] = 0;
-      } else {
-        items[product.id]++;
-      }
-      _ctrl.add(items);
-    }
+    setAmount(product, (items[product.id] ?? 0) + 1);
   }
 
   remove(Product product) {
-    if (items[product.id] > 0) {
-      items[product.id]--;
-      product.stock++;
+    if (items[product.id] != null && items[product.id] > 0) {
+      setAmount(product, items[product.id] - 1);
+    }
+  }
+
+  void setAmount(Product product, int amount) {
+    if (product.stock - amount >= 0) {
+      items[product.id] = amount;
       _ctrl.add(items);
     }
   }

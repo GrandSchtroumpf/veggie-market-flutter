@@ -4,6 +4,7 @@ import 'package:veggie_market/auth/shell.dart';
 import 'package:badges/badges.dart';
 import '../service.dart';
 import '../product/model.dart';
+import './item.dart';
 
 class MarketList extends StatelessWidget {
   @override
@@ -49,7 +50,7 @@ class MarketList extends StatelessWidget {
           final docs = snapshot.data;
           return ListView.builder(
             itemCount: docs.length,
-            itemBuilder: (context, i) => ProductItem(docs[i]),
+            itemBuilder: (context, i) => MarketItem(docs[i]),
           );
         },
       ),
@@ -57,46 +58,13 @@ class MarketList extends StatelessWidget {
         onPressed: () => Navigator.pushNamed(context, '/m/bucket'),
         child: Badge(
           badgeContent: StreamBuilder<Map<String, int>>(
-            initialData: {},
+            initialData: bucket.items,
             stream: bucket.stream,
             builder: (ctx, snapshot) => Text(snapshot.data.length.toString()),
           ),
           child: Icon(Icons.shopping_basket),
         ),
       ),
-    );
-  }
-}
-
-class ProductItem extends StatelessWidget {
-  final Product product;
-  ProductItem(this.product);
-
-  @override
-  Widget build(BuildContext context) {
-    final service = ServiceProvider.of(context).product;
-    final bucket = ServiceProvider.of(context).bucket;
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(product.image ?? productImg),
-      ),
-      title: Text(product.name),
-      subtitle: Text(
-        '${product.price}€/${product.unit} - ${product.stock} in stock.',
-      ),
-      trailing: IconButton(
-        onPressed: () {
-          product.stock = product.stock - 1;
-          service.update(product.id, product);
-        },
-        icon: IconButton(
-          onPressed: () => bucket.add(product),
-          icon: Icon(Icons.add),
-        ),
-      ),
-      onTap: () {
-        Navigator.pushNamed(context, '/m/view', arguments: product.id);
-      },
     );
   }
 }
