@@ -25,7 +25,9 @@ class Service<T> {
     storage = FirebaseStorage().ref().child(name);
   }
 
-  DocumentReference doc(String id) {
+  /// Give the reference of a document
+  /// An empty value will generate a new id
+  DocumentReference doc([String id]) {
     return this.collection.doc(id);
   }
 
@@ -91,5 +93,9 @@ class ServiceProvider extends InheritedWidget {
       services[name] = Service<T>(name, converter);
     }
     return services[name];
+  }
+
+  Future<T> runTx<T>(Future<T> Function(Transaction) txFn) {
+    return FirebaseFirestore.instance.runTransaction(txFn);
   }
 }

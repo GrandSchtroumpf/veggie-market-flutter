@@ -18,6 +18,19 @@ class Order {
     this.time,
     this.email,
   });
+
+  Order.fromJson(Map<String, dynamic> data, DocumentReference ref)
+      : id = ref.id,
+        ref = ref,
+        email = data['email'],
+        time = data['time'],
+        items = data['items'].map((item) => OrderItem.fromJson(item)).toList();
+
+  toJson() => {
+        'email': email,
+        'time': time,
+        'items': items.map((item) => item.toJson()).toList()
+      };
 }
 
 class OrderItem {
@@ -35,22 +48,11 @@ class OrderItem {
 class OrderConverter extends Converter<Order> {
   @override
   Order fromFirestore(DocumentSnapshot snapshot) {
-    final data = snapshot.data();
-    return Order(
-      ref: snapshot.reference,
-      id: snapshot.id,
-      items: jsonDecode(data['items']), // TODO: make it work normally
-      time: data['time'],
-      email: data['email'],
-    );
+    return Order.fromJson(snapshot.data(), snapshot.reference);
   }
 
   @override
   Map<String, dynamic> toFirestore(Order data) {
-    return {
-      'email': data.email,
-      'time': data.time,
-      'items': jsonEncode(data.items),
-    };
+    return data.toJson();
   }
 }

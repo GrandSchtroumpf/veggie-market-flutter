@@ -9,9 +9,10 @@ class MarketBucket extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final bucket = ServiceProvider.of(context).bucket;
-    final productService = ServiceProvider.of(context).product;
-    final orderService = ServiceProvider.of(context).order;
+    final services = ServiceProvider.of(context);
+    final bucket = services.bucket;
+    final productService = services.product;
+    final orderService = services.order;
     return FutureBuilder<List<Product>>(
       future: productService.getMany(bucket.items.keys.toList()),
       builder: (context, snapshot) {
@@ -64,7 +65,18 @@ class MarketBucket extends StatelessWidget {
             onPressed: () async {
               Order order = await bucket.createOrder(context);
               if (order != null) {
-                await orderService.create(order);
+                // Create order & reduce stock
+                await services.runTx((tx) async {
+                  final futures = order.items.map((item) async {
+                    final ref = productService.doc(item.productId);
+                    final snapshot = await tx.get(ref);
+                    int stock = snapshot.data()['stock'];
+                    return tx.update(ref, {'stock': stock - item.amount});
+                  }).toList();
+                  await Future.wait(futures);
+                  final ref = orderService.doc();
+                  return tx.set(ref, order.toJson());
+                });
                 Navigator.pop(context);
                 bucket.clear();
               } else {
