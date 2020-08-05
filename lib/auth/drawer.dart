@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../service.dart';
+import '../seller/service.dart';
 import './avatar.dart';
 
 class AuthDrawer extends StatelessWidget {
@@ -10,6 +11,50 @@ class AuthDrawer extends StatelessWidget {
   AuthDrawer(this.user);
   @override
   Widget build(BuildContext context) {
+    SellerService service = ServiceProvider.of(context).seller;
+    return StreamBuilder<bool>(
+      initialData: false,
+      stream: service.isSellerChange(user.uid),
+      builder: (context, snapshot) {
+        bool isSeller = snapshot.data;
+        return isSeller
+            ? sellerDrawer(context, service)
+            : buyerDrawer(context, service);
+      },
+    );
+  }
+
+  Drawer buyerDrawer(BuildContext context, SellerService service) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [avatar(user), Text(user.email)],
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).accentColor,
+            ),
+          ),
+          ListTile(
+            title: Text('Profile'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/profile');
+            },
+          ),
+          FlatButton(
+            onPressed: () => service.becomeSeller(),
+            child: Text('Click here to become a Seller'),
+          )
+        ],
+      ),
+    );
+  }
+
+  Drawer sellerDrawer(BuildContext context, SellerService service) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,

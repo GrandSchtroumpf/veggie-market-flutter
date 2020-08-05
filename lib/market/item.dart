@@ -34,8 +34,8 @@ class MarketItem extends StatelessWidget {
           ),
         ),
         StreamBuilder<int>(
-          initialData: bucket.items[product.id] ?? 0,
-          stream: bucket.queryItem(product.id),
+          initialData: bucket.items[product.path] ?? 0,
+          stream: bucket.queryItem(product.path),
           builder: (context, snapshot) {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,

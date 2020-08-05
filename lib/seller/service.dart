@@ -10,6 +10,10 @@ class SellerService extends CollectionService<Seller> {
   final toFirestore = (seller) => seller.toJson();
   final name = 'sellers';
 
+  Stream<bool> isSellerChange(String uid) {
+    return doc(uid).snapshots().map((snapshot) => snapshot.exists);
+  }
+
   queryCurrent() {
     return _auth.onAuthStateChanged.switchMap((user) => queryOne(user.uid));
   }

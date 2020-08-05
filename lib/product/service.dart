@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../_service.dart';
 import './model.dart';
@@ -16,6 +17,14 @@ class ProductService extends SubAuthCollectionService<Product> {
           parentName: 'sellers',
           name: 'products',
         );
+
+  Stream<List<List<Product>>> queryFromSellers(Iterable<String> ids,
+      [Query Function(CollectionReference) queryFn]) {
+    final queries = ids.map((id) => query(id, queryFn));
+    return CombineLatestStream.list(queries).asBroadcastStream();
+  }
+
+  /// WRITE ///
 
   Future<CollectionReference> _ownCollection() {
     return auth.currentUser().then((user) => collection(user.uid));
@@ -48,7 +57,7 @@ class ProductService extends SubAuthCollectionService<Product> {
   }
 
   Future<void> remove(String id) {
-    return this.doc(id).delete();
+    return _ownCollection().then((collection) => collection.doc(id).delete());
   }
 
   Future<StorageUploadTask> upload(String id, File file) async {

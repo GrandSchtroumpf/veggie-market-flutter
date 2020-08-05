@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../service.dart';
 
 class Order {
-  final String id;
   final DocumentReference ref;
   DateTime time = DateTime.now();
   List<OrderItem> items;
@@ -13,12 +12,15 @@ class Order {
   double price;
 
   Order({
-    this.id,
     this.ref,
     this.items,
     this.time,
     this.email,
   });
+
+  String get id {
+    return ref.id;
+  }
 
   factory Order.fromSnapshot(DocumentSnapshot snapshot) {
     if (snapshot.exists) {
@@ -28,8 +30,7 @@ class Order {
   }
 
   Order.fromJson(Map<String, dynamic> data, DocumentReference ref)
-      : id = ref.id,
-        ref = ref,
+      : ref = ref,
         email = data['email'],
         time = data['time'],
         items = data['items'].map((item) => OrderItem.fromJson(item)).toList();

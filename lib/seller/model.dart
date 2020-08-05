@@ -4,7 +4,7 @@ class Seller {
   DocumentReference ref;
   String name;
 
-  get id {
+  String get id {
     return ref.id;
   }
 

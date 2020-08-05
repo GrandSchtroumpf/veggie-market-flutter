@@ -12,7 +12,7 @@ Stream<List<T>> queryFrom<T>(
 
   fromSnapshot(QuerySnapshot snapshots) {
     return snapshots.docs
-        .where((doc) => !doc.exists)
+        .where((doc) => doc.exists)
         .map(fromFirestore)
         .toList();
   }
@@ -91,7 +91,7 @@ abstract class SubAuthCollectionService<T> {
   });
 
   String createId() {
-    return db.doc('').id;
+    return db.collection('EMPTY').doc().id;
   }
 
   CollectionReference collection(String parentId) {
