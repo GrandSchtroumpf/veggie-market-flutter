@@ -77,11 +77,16 @@ class MarketBucket extends StatelessWidget {
                   final ref = orderService.doc();
                   return tx.set(ref, order.toJson());
                 });
+                final snackBar = SnackBar(
+                  content: Text('Thank you for your order 😘.'),
+                  duration: Duration(seconds: 3),
+                );
+                _key.currentState.showSnackBar(snackBar);
                 Navigator.pop(context);
                 bucket.clear();
               } else {
                 final snackBar = SnackBar(
-                  content: Text('Could not send order.'),
+                  content: Text('Could not send order 🙁.'),
                   duration: Duration(seconds: 3),
                 );
                 _key.currentState.showSnackBar(snackBar);

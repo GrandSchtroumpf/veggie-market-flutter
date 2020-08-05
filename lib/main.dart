@@ -6,6 +6,7 @@ import './market/bucket.dart';
 import './dashboard/list.dart';
 import './dashboard/create.dart';
 import './dashboard/edit.dart';
+import './dashboard/order.dart';
 import './auth/login.dart';
 import './auth/profile.dart';
 import './service.dart';
@@ -50,6 +51,7 @@ class App extends StatelessWidget {
           '/d/list': (ctx) => ProductList(),
           '/d/create': (ctx) => ProductCreate(),
           '/d/edit': (ctx) => ProductEdit(),
+          '/d/order': (ctx) => OrderList(),
         },
         theme: ThemeData(
           primarySwatch: Colors.lightGreen,
