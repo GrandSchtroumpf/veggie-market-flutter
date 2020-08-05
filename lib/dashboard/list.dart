@@ -11,7 +11,7 @@ class ProductList extends StatelessWidget {
     return AuthShell(
       title: 'Dashboard',
       body: StreamBuilder<List<Product>>(
-        stream: service.valueChanges(),
+        stream: service.valueChanges((ref) => ref),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('An error occured ' + snapshot.error.toString());

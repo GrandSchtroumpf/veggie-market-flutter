@@ -54,7 +54,9 @@ class Bucket {
         builder: (context) => OrderPage(),
       );
     }
-    if (email == null) {}
+    if (email == null) {
+      return null;
+    }
     final List<OrderItem> orderItems = [];
     items.forEach((key, value) {
       if (value != 0) {

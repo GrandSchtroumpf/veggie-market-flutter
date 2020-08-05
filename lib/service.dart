@@ -52,8 +52,8 @@ class Service<T> {
     return Future.wait(ids.map((id) => getValue(id)));
   }
 
-  Stream<List<T>> valueChanges() {
-    final stream = collection.snapshots();
+  Stream<List<T>> valueChanges(Query Function(CollectionReference) queryFn) {
+    final stream = queryFn(collection).snapshots();
     return stream.map((event) {
       final docs = event.docs;
       docs.removeWhere((s) => !s.exists);

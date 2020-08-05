@@ -14,7 +14,9 @@ class MarketList extends StatelessWidget {
     return AuthShell(
       title: 'Market',
       body: StreamBuilder<List<Product>>(
-        stream: service.valueChanges(),
+        stream: service.valueChanges((ref) {
+          return ref.where('stock', isGreaterThan: 0);
+        }),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('An error occured ' + snapshot.error.toString());
