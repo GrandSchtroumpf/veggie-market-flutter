@@ -19,20 +19,20 @@ class Bucket {
   }
 
   add(Product product) {
-    setAmount(product, (items[product.id] ?? 0) + 1);
+    setAmount(product, (items[product.path] ?? 0) + 1);
   }
 
   remove(Product product) {
-    if (items[product.id] != null && items[product.id] > 0) {
-      setAmount(product, items[product.id] - 1);
+    if (items[product.path] != null && items[product.path] > 0) {
+      setAmount(product, items[product.path] - 1);
     }
   }
 
   void setAmount(Product product, int amount) {
     if (product.stock - amount >= 0) {
-      items[product.id] = amount;
+      items[product.path] = amount;
       if (amount == 0) {
-        items.remove(product.id);
+        items.remove(product.path);
       }
       _ctrl.add(items);
     }
@@ -43,26 +43,15 @@ class Bucket {
     _ctrl.add(items);
   }
 
-  createOrder(BuildContext context) async {
-    String email;
+  getEmail(BuildContext context) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     if (user != null) {
-      email = user.email;
+      return user.email;
     } else {
-      email = await showDialog(
+      return showDialog(
         context: context,
         builder: (context) => OrderPage(),
       );
     }
-    if (email == null) {
-      return null;
-    }
-    final List<OrderItem> orderItems = [];
-    items.forEach((key, value) {
-      if (value != 0) {
-        orderItems.add(OrderItem(key, value));
-      }
-    });
-    return Order(email: email, items: orderItems);
   }
 }

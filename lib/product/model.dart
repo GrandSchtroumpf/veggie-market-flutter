@@ -8,7 +8,6 @@ const productImg =
 
 class Product {
   DocumentReference ref;
-  String id;
   String name;
   String image;
   String unit;
@@ -18,7 +17,6 @@ class Product {
 
   Product({
     this.ref,
-    this.id,
     this.image,
     this.file,
     this.unit,
@@ -26,31 +24,62 @@ class Product {
     this.price = 0.0,
     this.stock = 0,
   });
-}
 
-class ProductConverter extends Converter<Product> {
-  @override
-  Product fromFirestore(DocumentSnapshot snapshot) {
-    final data = snapshot.data();
-    return Product(
-      ref: snapshot.reference,
-      id: snapshot.id,
-      image: data['image'],
-      name: data['name'] ?? '',
-      price: data['price'] ?? 0.0,
-      stock: data['stock'] ?? 0,
-      unit: data['unit'],
-    );
+  String get id {
+    return ref.id;
   }
 
-  @override
-  Map<String, dynamic> toFirestore(Product data) {
-    return {
-      'name': data.name,
-      'image': data.image,
-      'price': data.price,
-      'stock': data.stock,
-      'unit': data.unit,
-    };
+  String get path {
+    return ref.path;
   }
+
+  factory Product.fromSnapshot(DocumentSnapshot snapshot) {
+    if (snapshot.exists) {
+      return Product.fromJson(snapshot.data(), snapshot.reference);
+    }
+    return null;
+  }
+
+  Product.fromJson(Map<String, dynamic> data, DocumentReference ref)
+      : ref = ref,
+        image = data['image'],
+        name = data['name'] ?? '',
+        price = data['price'] ?? 0.0,
+        stock = data['stock'] ?? 0,
+        unit = data['unit'];
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'image': image,
+        'price': price,
+        'stock': stock,
+        'unit': unit,
+      };
 }
+
+// class ProductConverter extends Converter<Product> {
+//   @override
+//   Product fromFirestore(DocumentSnapshot snapshot) {
+//     final data = snapshot.data();
+//     return Product(
+//       ref: snapshot.reference,
+//       id: snapshot.id,
+//       image: data['image'],
+//       name: data['name'] ?? '',
+//       price: data['price'] ?? 0.0,
+//       stock: data['stock'] ?? 0,
+//       unit: data['unit'],
+//     );
+//   }
+
+//   @override
+//   Map<String, dynamic> toFirestore(Product data) {
+//     return {
+//       'name': data.name,
+//       'image': data.image,
+//       'price': data.price,
+//       'stock': data.stock,
+//       'unit': data.unit,
+//     };
+//   }
+// }

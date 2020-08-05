@@ -35,7 +35,8 @@ dependencies:
   firebase_storage: ^4.0.0-dev.1
   firebase_auth: ^0.17.0-dev.1
   firebase_performance: "^0.4.0-dev.1"
-
+  
+  rxdart: ^0.24.1
   image_picker: ^0.6.7+4
   image_cropper: ^1.2.3
   badges: ^1.1.1

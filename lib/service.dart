@@ -4,9 +4,10 @@ import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import './order/model.dart';
+import 'package:veggie_market/seller/service.dart';
+import './product/service.dart';
+import './order/service.dart';
 import './order/bucket.dart';
-import './product/model.dart';
 
 abstract class Converter<T> {
   T fromFirestore(DocumentSnapshot snapshot);
@@ -73,8 +74,10 @@ class Service<T> {
 /// Provide the list of service for the app
 /// Create the service only on demand
 class ServiceProvider extends InheritedWidget {
-  final product = Service<Product>('products', ProductConverter());
-  final order = Service<Order>('orders', OrderConverter());
+  final seller = SellerService();
+  final product =
+      ProductService(); // Service<Product>('products', ProductConverter());
+  final order = OrderService(); // Service<Order>('orders', OrderConverter());
   final bucket = Bucket();
   final Map<String, Service> services = {};
 

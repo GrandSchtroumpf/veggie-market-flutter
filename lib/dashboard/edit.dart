@@ -27,11 +27,11 @@ class ProductEdit extends StatelessWidget {
           product: product,
           onSubmit: (Product product) async {
             if (product.file != null) {
-              final task = service.upload(product.id, product.file);
+              final task = await service.upload(product.id, product.file);
               final snapshot = await task.onComplete;
               product.image = await snapshot.ref.getDownloadURL();
             }
-            await service.update(product.id, product);
+            await service.updateDoc(product);
             Navigator.pop(context);
           },
         ),

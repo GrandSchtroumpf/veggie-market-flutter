@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../product/model.dart';
-import '../order/model.dart';
 import '../service.dart';
 import './item.dart';
 
@@ -63,28 +62,18 @@ class MarketBucket extends StatelessWidget {
             label: Text('Send order'),
             icon: Icon(Icons.send),
             onPressed: () async {
-              Order order = await bucket.createOrder(context);
-              if (order != null) {
-                // Create order & reduce stock
-                await services.runTx((tx) async {
-                  final futures = order.items.map((item) async {
-                    final ref = productService.doc(item.productId);
-                    final snapshot = await tx.get(ref);
-                    int stock = snapshot.data()['stock'];
-                    return tx.update(ref, {'stock': stock - item.amount});
-                  }).toList();
-                  await Future.wait(futures);
-                  final ref = orderService.doc();
-                  return tx.set(ref, order.toJson());
-                });
+              String email = await bucket.getEmail(context);
+              try {
+                await orderService.createFromBucket(email, bucket.items);
                 final snackBar = SnackBar(
                   content: Text('Thank you for your order 😘.'),
                   duration: Duration(seconds: 3),
                 );
                 _key.currentState.showSnackBar(snackBar);
+
                 Navigator.pop(context);
                 bucket.clear();
-              } else {
+              } catch (err) {
                 final snackBar = SnackBar(
                   content: Text('Could not send order 🙁.'),
                   duration: Duration(seconds: 3),

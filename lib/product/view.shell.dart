@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../service.dart';
 import 'model.dart';
+
+// TODO: Remove this as we pass the products with the arguments
 
 class ProductViewShell extends StatelessWidget {
   final Widget Function(BuildContext, Product) builder;
@@ -8,19 +9,7 @@ class ProductViewShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String id = ModalRoute.of(context).settings.arguments;
-    final service = ServiceProvider.of(context).product;
-    return FutureBuilder<Product>(
-      future: service.getValue(id),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('An error occured');
-        }
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        }
-        return builder(context, snapshot.data);
-      },
-    );
+    final Product product = ModalRoute.of(context).settings.arguments;
+    return builder(context, product);
   }
 }

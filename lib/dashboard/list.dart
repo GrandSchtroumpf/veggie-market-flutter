@@ -11,7 +11,7 @@ class ProductList extends StatelessWidget {
     return AuthShell(
       title: 'Dashboard',
       body: StreamBuilder<List<Product>>(
-        stream: service.valueChanges((ref) => ref),
+        stream: service.queryOwn(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('An error occured ' + snapshot.error.toString());
@@ -79,7 +79,7 @@ class ProductItem extends StatelessWidget {
       ),
       trailing: Icon(Icons.edit),
       onTap: () {
-        Navigator.pushNamed(context, '/d/edit', arguments: product.id);
+        Navigator.pushNamed(context, '/d/edit', arguments: product);
       },
     );
   }

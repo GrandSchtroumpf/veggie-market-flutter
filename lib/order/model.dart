@@ -10,6 +10,7 @@ class Order {
   DateTime time = DateTime.now();
   List<OrderItem> items;
   String email;
+  double price;
 
   Order({
     this.id,
@@ -19,6 +20,13 @@ class Order {
     this.email,
   });
 
+  factory Order.fromSnapshot(DocumentSnapshot snapshot) {
+    if (snapshot.exists) {
+      return Order.fromJson(snapshot.data(), snapshot.reference);
+    }
+    return null;
+  }
+
   Order.fromJson(Map<String, dynamic> data, DocumentReference ref)
       : id = ref.id,
         ref = ref,
@@ -26,7 +34,7 @@ class Order {
         time = data['time'],
         items = data['items'].map((item) => OrderItem.fromJson(item)).toList();
 
-  toJson() => {
+  Map<String, dynamic> toJson() => {
         'email': email,
         'time': time,
         'items': items.map((item) => item.toJson()).toList()
@@ -34,6 +42,8 @@ class Order {
 }
 
 class OrderItem {
+  /// Price at the date of the order
+  double unitPrice;
   String productId;
   int amount;
 

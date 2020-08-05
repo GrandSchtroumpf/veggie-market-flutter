@@ -12,13 +12,13 @@ class ProductCreate extends StatelessWidget {
       body: ProductForm(
         product: Product(),
         onSubmit: (Product product) async {
-          final doc = await service.create(product);
+          String id = service.createId();
           if (product.file != null) {
-            final task = service.upload(doc.id, product.file);
+            final task = await service.upload(id, product.file);
             final snapshot = await task.onComplete;
             product.image = await snapshot.ref.getDownloadURL();
-            await service.update(doc.id, product);
           }
+          await service.setDoc(id, product);
           Navigator.pop(context);
         },
       ),
