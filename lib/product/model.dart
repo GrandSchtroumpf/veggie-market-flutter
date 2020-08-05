@@ -56,30 +56,3 @@ class Product {
         'unit': unit,
       };
 }
-
-// class ProductConverter extends Converter<Product> {
-//   @override
-//   Product fromFirestore(DocumentSnapshot snapshot) {
-//     final data = snapshot.data();
-//     return Product(
-//       ref: snapshot.reference,
-//       id: snapshot.id,
-//       image: data['image'],
-//       name: data['name'] ?? '',
-//       price: data['price'] ?? 0.0,
-//       stock: data['stock'] ?? 0,
-//       unit: data['unit'],
-//     );
-//   }
-
-//   @override
-//   Map<String, dynamic> toFirestore(Product data) {
-//     return {
-//       'name': data.name,
-//       'image': data.image,
-//       'price': data.price,
-//       'stock': data.stock,
-//       'unit': data.unit,
-//     };
-//   }
-// }

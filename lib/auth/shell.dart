@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:veggie_market/service.dart';
 import './login.dart';
 import './drawer.dart';
 import './avatar.dart';
 
 class AuthShell extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final Widget body;
   final Widget floatingActionButton;
   final String title;
@@ -34,8 +34,9 @@ class AuthShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user$ = ServiceProvider.of(context).user$;
     return StreamBuilder<FirebaseUser>(
-      stream: _auth.onAuthStateChanged,
+      stream: user$,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('An error occured ' + snapshot.error.toString());

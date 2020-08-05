@@ -7,7 +7,7 @@ import '../service.dart';
 class Order {
   final DocumentReference ref;
   DateTime time = DateTime.now();
-  List<OrderItem> items;
+  List<dynamic> items;
   String email;
   double price;
 
@@ -33,7 +33,7 @@ class Order {
       : ref = ref,
         email = data['email'],
         time = data['time'],
-        items = data['items'].map((item) => OrderItem.fromJson(item)).toList();
+        items = getItems(data['items']);
 
   Map<String, dynamic> toJson() => {
         'email': email,
@@ -42,9 +42,16 @@ class Order {
       };
 }
 
+// Need to set the type to List<dynamic> insite of Map<String, dynamic>
+List<OrderItem> getItems(List<dynamic> items) {
+  return items.map((item) => OrderItem.fromJson(item)).toList();
+}
+
 class OrderItem {
   /// Price at the date of the order
   double unitPrice;
+
+  /// TODO: Change to product path as we keep the whole path
   String productId;
   int amount;
 
@@ -54,16 +61,4 @@ class OrderItem {
         amount = item['amount'];
 
   Map<String, dynamic> toJson() => {'productId': productId, 'amount': amount};
-}
-
-class OrderConverter extends Converter<Order> {
-  @override
-  Order fromFirestore(DocumentSnapshot snapshot) {
-    return Order.fromJson(snapshot.data(), snapshot.reference);
-  }
-
-  @override
-  Map<String, dynamic> toFirestore(Order data) {
-    return data.toJson();
-  }
 }

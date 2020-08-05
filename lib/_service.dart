@@ -10,7 +10,7 @@ Stream<List<T>> queryFrom<T>(
     queryFn = (ref) => ref;
   }
 
-  fromSnapshot(QuerySnapshot snapshots) {
+  List<T> fromSnapshot(QuerySnapshot snapshots) {
     return snapshots.docs
         .where((doc) => doc.exists)
         .map(fromFirestore)

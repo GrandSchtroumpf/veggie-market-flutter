@@ -13,12 +13,14 @@ class SellerOrderList extends StatelessWidget {
         query: service.queryOwn(),
         headerBuilder: (context, order) {
           return ListTile(
-            title: Text('header'),
+            title: Text('Work in Progress'),
+            subtitle: Text(order.email),
           );
         },
-        itemBuilder: (contet, order) {
+        itemBuilder: (contet, item) {
           return ListTile(
-            title: Text('Item'),
+            title: Text('Item ordered'),
+            subtitle: Text(item.productId),
           );
         },
       ),

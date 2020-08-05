@@ -1,85 +1,18 @@
-import 'dart:io';
-import 'package:path/path.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:veggie_market/seller/service.dart';
 import './product/service.dart';
 import './order/service.dart';
 import './order/bucket.dart';
 
-abstract class Converter<T> {
-  T fromFirestore(DocumentSnapshot snapshot);
-  dynamic toFirestore(T data);
-  // Map<String, dynamic> toFirestore(T data);
-}
-
-/// A base service class
-class Service<T> {
-  StorageReference storage;
-  CollectionReference collection;
-  Converter<T> converter;
-
-  Service(String name, this.converter) {
-    collection = FirebaseFirestore.instance.collection(name);
-    storage = FirebaseStorage().ref().child(name);
-  }
-
-  /// Give the reference of a document
-  /// An empty value will generate a new id
-  DocumentReference doc([String id]) {
-    return this.collection.doc(id);
-  }
-
-  Future<DocumentReference> create(T doc) {
-    final data = converter.toFirestore(doc);
-    return this.collection.add(data);
-  }
-
-  Future<void> update(String id, T doc) {
-    final data = converter.toFirestore(doc);
-    return this.doc(id).update(data);
-  }
-
-  Future<void> remove(String id) {
-    return this.doc(id).delete();
-  }
-
-  Future<T> getValue(String id) async {
-    final snapshot = await this.doc(id).get();
-    return snapshot.exists ? converter.fromFirestore(snapshot) : null;
-  }
-
-  Future<List<T>> getMany(List<String> ids) async {
-    return Future.wait(ids.map((id) => getValue(id)));
-  }
-
-  Stream<List<T>> valueChanges(Query Function(CollectionReference) queryFn) {
-    final stream = queryFn(collection).snapshots();
-    return stream.map((event) {
-      final docs = event.docs;
-      docs.removeWhere((s) => !s.exists);
-      return docs.map((s) => converter.fromFirestore(s)).toList();
-    });
-  }
-
-  /// TODO: Change path to be "users/:userId/products/filename"
-  StorageUploadTask upload(String id, File file) {
-    final String filename = basename(file.path);
-    return storage.child(id).child(filename).putFile(file);
-  }
-}
-
 /// Provide the list of service for the app
 /// Create the service only on demand
 class ServiceProvider extends InheritedWidget {
+  final user$ = FirebaseAuth.instance.onAuthStateChanged.asBroadcastStream();
   final seller = SellerService();
-  final product =
-      ProductService(); // Service<Product>('products', ProductConverter());
-  final order = OrderService(); // Service<Order>('orders', OrderConverter());
+  final product = ProductService();
+  final order = OrderService();
   final bucket = Bucket();
-  final Map<String, Service> services = {};
 
   ServiceProvider({Key key, @required Widget child})
       : super(key: key, child: child);
@@ -90,15 +23,4 @@ class ServiceProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(ServiceProvider old) => true;
-
-  Service<T> get<T>(String name, Converter<T> converter) {
-    if (!services.containsKey(name)) {
-      services[name] = Service<T>(name, converter);
-    }
-    return services[name];
-  }
-
-  Future<T> runTx<T>(Future<T> Function(Transaction) txFn) {
-    return FirebaseFirestore.instance.runTransaction(txFn);
-  }
 }

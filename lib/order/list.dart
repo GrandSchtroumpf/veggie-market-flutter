@@ -4,14 +4,15 @@ import './model.dart';
 class OrderList extends StatefulWidget {
   final Stream<List<Order>> query;
   final Widget whenEmpty;
+  final Widget whenLoading;
   final Widget Function(BuildContext, Order) headerBuilder;
-  final Widget Function(BuildContext, Order) itemBuilder;
-  OrderList({
-    this.query,
-    this.headerBuilder,
-    this.itemBuilder,
-    this.whenEmpty = const Text('Empty'),
-  });
+  final Widget Function(BuildContext, OrderItem) itemBuilder;
+  OrderList(
+      {this.query,
+      this.headerBuilder,
+      this.itemBuilder,
+      this.whenEmpty = const Text('Empty'),
+      this.whenLoading = const Center(child: CircularProgressIndicator())});
 
   @override
   createState() => OrderListState(
@@ -19,21 +20,24 @@ class OrderList extends StatefulWidget {
         headerBuilder: headerBuilder,
         itemBuilder: itemBuilder,
         whenEmpty: whenEmpty,
+        whenLoading: whenLoading,
       );
 }
 
 class OrderListState extends State<OrderList> {
   final Stream<List<Order>> query;
   final Widget whenEmpty;
+  final Widget whenLoading;
   final Widget Function(BuildContext, Order) headerBuilder;
-  final Widget Function(BuildContext, Order) itemBuilder;
-  Map<String, bool> expanded;
+  final Widget Function(BuildContext, OrderItem) itemBuilder;
+  final Map<String, bool> expanded = {};
 
   OrderListState({
     this.query,
     this.headerBuilder,
     this.itemBuilder,
-    this.whenEmpty = const Text('Empty'),
+    this.whenEmpty,
+    this.whenLoading,
   });
 
   isExpanded(Order order) {
@@ -49,14 +53,24 @@ class OrderListState extends State<OrderList> {
     return StreamBuilder<List<Order>>(
       stream: query,
       builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('An error occured ');
+        }
         if (!snapshot.hasData) {
+          return whenLoading;
+        }
+        if (snapshot.data.length == 0) {
           return whenEmpty;
         }
         List<Order> orders = snapshot.data;
         final panels = orders.map((order) => this.panel(context, order));
-        return ExpansionPanelList(
-          //expansionCallback: () {},
-          children: panels.toList(),
+        return SingleChildScrollView(
+          child: Container(
+            child: ExpansionPanelList(
+              expansionCallback: (i, _) => setState(() => toogle(orders[i])),
+              children: panels.toList(),
+            ),
+          ),
         );
       },
     );
@@ -65,7 +79,11 @@ class OrderListState extends State<OrderList> {
   ExpansionPanel panel(BuildContext context, Order order) {
     return ExpansionPanel(
       headerBuilder: (context, _) => headerBuilder(context, order),
-      body: itemBuilder(context, order),
+      body: ListView.builder(
+        shrinkWrap: true, // Needed for the scroll to work as expected
+        itemCount: order.items.length,
+        itemBuilder: (contet, i) => itemBuilder(context, order.items[i]),
+      ),
       isExpanded: isExpanded(order),
     );
   }
