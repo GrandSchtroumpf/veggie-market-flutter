@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import './market/product-list.dart';
-import './market/view.dart';
+import 'market/product-view.dart';
 import './market/bucket.dart';
 import './market/order.dart';
 import './dashboard/list.dart';
@@ -48,7 +48,7 @@ class App extends StatelessWidget {
           '/profile': (ctx) => Profile(),
           '/m/bucket': (ctx) => MarketBucket(),
           '/m/list': (ctx) => BuyerProductList(),
-          '/m/view': (ctx) => MarketView(),
+          '/m/view': (ctx) => BuyerProductView(),
           '/m/order': (ctx) => BuyerOrderList(),
           '/d/list': (ctx) => ProductList(),
           '/d/create': (ctx) => ProductCreate(),

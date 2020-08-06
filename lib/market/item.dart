@@ -15,8 +15,13 @@ class MarketItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(product.image ?? productImg),
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/m/view', arguments: product);
+            },
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(product.image ?? productImg),
+            ),
           ),
         ),
         Expanded(
