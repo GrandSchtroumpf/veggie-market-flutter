@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../market/order.dart';
 import '../product/model.dart';
-import './model.dart';
 
 class Bucket {
   final StreamController<Map<String, int>> _ctrl = StreamController.broadcast();
@@ -14,8 +13,8 @@ class Bucket {
     return _ctrl.stream;
   }
 
-  Stream<int> queryItem(String productId) {
-    return stream.map((items) => items[productId] ?? 0).distinct();
+  Stream<int> queryItem(String productPath) {
+    return stream.map((items) => items[productPath] ?? 0).distinct();
   }
 
   add(Product product) {

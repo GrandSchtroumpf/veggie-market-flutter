@@ -1,5 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import '../_service.dart';
+import '../product/model.dart';
 import './model.dart';
 
 class OrderService extends SubAuthCollectionService<Order> {
@@ -28,21 +29,25 @@ class OrderService extends SubAuthCollectionService<Order> {
         if (amount == 0) {
           return tx;
         }
-        // Sort by Seller
-        final sellerId = path.split('/')[1];
-        if (itemsBySellers[sellerId] == null) {
-          itemsBySellers[sellerId] = [OrderItem(path, amount)];
-        } else {
-          itemsBySellers[sellerId].add(OrderItem(path, amount));
-        }
         // Remove amount from current product
         final ref = db.doc(path);
         final update = tx
             .get(ref)
-            .then((snapshot) => snapshot.data()['stock'])
-            .then((stock) => tx.update(ref, {'stock': stock - amount}));
+            .then((snapshot) => Product.fromSnapshot(snapshot))
+            .then((product) {
+          tx.update(ref, {'stock': product.stock - amount});
+          // Sort by Seller
+          final sellerId = path.split('/')[1];
+          final item = OrderItem(path, amount, product.price);
+          if (itemsBySellers[sellerId] == null) {
+            itemsBySellers[sellerId] = [item];
+          } else {
+            itemsBySellers[sellerId].add(item);
+          }
+        });
         futures.add(update);
       });
+      await Future.wait(futures);
 
       // Create Orders
       itemsBySellers.forEach((sellerId, items) {
@@ -50,7 +55,6 @@ class OrderService extends SubAuthCollectionService<Order> {
         final ref = collection(sellerId).doc();
         tx.set(ref, order.toJson());
       });
-      await Future.wait(futures);
     });
   }
 }

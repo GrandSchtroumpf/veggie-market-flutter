@@ -105,7 +105,7 @@ class TotalPrice extends StatelessWidget {
         }
         Map<String, int> items = snapshot.data;
         double total = products
-            .map((product) => product.price * (items[product.id] ?? 0))
+            .map((product) => product.price * (items[product.path] ?? 0))
             .reduce((sum, price) => sum + price);
         return Center(
           child: Text(

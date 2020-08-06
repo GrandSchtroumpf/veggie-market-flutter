@@ -1,15 +1,10 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../service.dart';
 
 class Order {
   final DocumentReference ref;
-  DateTime time = DateTime.now();
-  List<dynamic> items;
+  Timestamp time = Timestamp.now();
+  List<OrderItem> items;
   String email;
-  double price;
 
   Order({
     this.ref,
@@ -20,6 +15,12 @@ class Order {
 
   String get id {
     return ref.id;
+  }
+
+  double get totalPrice {
+    return items
+        .map((item) => item.price)
+        .reduce((total, price) => total + price);
   }
 
   factory Order.fromSnapshot(DocumentSnapshot snapshot) {
@@ -49,16 +50,23 @@ List<OrderItem> getItems(List<dynamic> items) {
 
 class OrderItem {
   /// Price at the date of the order
-  double unitPrice;
-
-  /// TODO: Change to product path as we keep the whole path
-  String productId;
+  double productPrice;
+  String productPath;
   int amount;
 
-  OrderItem(this.productId, this.amount);
-  OrderItem.fromJson(Map<String, dynamic> item)
-      : productId = item['productId'],
-        amount = item['amount'];
+  double get price {
+    return productPrice * amount;
+  }
 
-  Map<String, dynamic> toJson() => {'productId': productId, 'amount': amount};
+  OrderItem(this.productPath, this.amount, this.productPrice);
+  OrderItem.fromJson(Map<String, dynamic> item)
+      : productPath = item['productPath'],
+        amount = item['amount'],
+        productPrice = item['productPrice'];
+
+  Map<String, dynamic> toJson() => {
+        'productPath': productPath,
+        'amount': amount,
+        'productPrice': productPrice,
+      };
 }
