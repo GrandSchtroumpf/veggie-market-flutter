@@ -47,14 +47,6 @@ class AuthDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('My Profile'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/profile');
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.shopping_basket),
             title: Text('Market'),
             onTap: () => Navigator.pushReplacementNamed(context, '/m/list'),
@@ -96,10 +88,10 @@ class AuthDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('Profile'),
+            title: Text('My Profile'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/profile');
+              Navigator.pushNamed(context, '/seller/edit');
             },
           ),
           ListTile(

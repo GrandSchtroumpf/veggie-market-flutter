@@ -1,8 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
 
-class Seller {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:veggie_market/service.dart';
+
+class Seller implements DocumentModel {
   DocumentReference ref;
   String name;
+  File file;
+  String description;
+  String image;
 
   String get id {
     return ref.id;
@@ -17,7 +23,13 @@ class Seller {
 
   Seller.fromJson(Map<String, dynamic> data, DocumentReference ref)
       : ref = ref,
-        name = data['name'];
+        name = data['name'],
+        description = data['description'],
+        image = data['image'];
 
-  Map<String, dynamic> toJson() => {'name': name};
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'description': description,
+        'image': image,
+      };
 }

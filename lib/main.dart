@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:veggie_market/dashboard/seller-edit.dart';
 import './market/product-list.dart';
 import 'market/product-view.dart';
 import './market/bucket.dart';
@@ -54,6 +55,7 @@ class App extends StatelessWidget {
           '/d/create': (ctx) => ProductCreate(),
           '/d/edit': (ctx) => ProductEdit(),
           '/d/order': (ctx) => SellerOrderList(),
+          '/seller/edit': (ctx) => SellerEdit(),
         },
         theme: ThemeData(
           primarySwatch: Colors.lightGreen,

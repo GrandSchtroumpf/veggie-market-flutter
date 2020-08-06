@@ -52,7 +52,15 @@ class BuyerProductList extends StatelessWidget {
                 itemBuilder: (context, i) {
                   final item = all[i];
                   if (item is Seller) {
-                    return ListTile(title: Text(item.name ?? 'Unknow'));
+                    return ListTile(
+                      title: Text(item.name ?? 'Unknow'),
+                      trailing: CircleAvatar(
+                        maxRadius: 16.0,
+                        backgroundImage: item.image != null
+                            ? NetworkImage(item.image)
+                            : AssetImage('assets/img/seller.png'),
+                      ),
+                    );
                   } else if (item is Product) {
                     return MarketItem(item);
                   } else {

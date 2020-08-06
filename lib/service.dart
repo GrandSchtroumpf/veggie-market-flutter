@@ -20,7 +20,12 @@ Stream<List<T>> queryFrom<T>(
   return queryFn(ref).snapshots().map(fromSnapshot).asBroadcastStream();
 }
 
-abstract class CollectionService<T> {
+abstract class DocumentModel {
+  DocumentReference ref;
+  String get id;
+}
+
+abstract class CollectionService<T extends DocumentModel> {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   T Function(DocumentSnapshot) fromFirestore;
   Map<String, dynamic> Function(T) toFirestore;
@@ -73,6 +78,11 @@ abstract class CollectionService<T> {
   add(T doc) {
     final data = toFirestore(doc);
     return collection.add(data);
+  }
+
+  Future<void> updateDoc(T document) {
+    final data = toFirestore(document);
+    return doc(document.id).update(data);
   }
 }
 
