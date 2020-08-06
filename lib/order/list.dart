@@ -54,7 +54,7 @@ class OrderListState extends State<OrderList> {
       stream: query,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Text('An error occured ');
+          throw snapshot.error;
         }
         if (!snapshot.hasData) {
           return whenLoading;

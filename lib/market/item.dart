@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../product/model.dart';
-import '../service.dart';
+import '../service-provider.dart';
 
 class MarketItem extends StatelessWidget {
   final Product product;

@@ -3,13 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import './market/product-list.dart';
 import './market/view.dart';
 import './market/bucket.dart';
+import './market/order.dart';
 import './dashboard/list.dart';
 import './dashboard/create.dart';
 import './dashboard/edit.dart';
 import './dashboard/order.dart';
 import './auth/login.dart';
 import './auth/profile.dart';
-import './service.dart';
+import 'service-provider.dart';
 
 void main() {
   runApp(Root());
@@ -48,6 +49,7 @@ class App extends StatelessWidget {
           '/m/bucket': (ctx) => MarketBucket(),
           '/m/list': (ctx) => BuyerProductList(),
           '/m/view': (ctx) => MarketView(),
+          '/m/order': (ctx) => BuyerOrderList(),
           '/d/list': (ctx) => ProductList(),
           '/d/create': (ctx) => ProductCreate(),
           '/d/edit': (ctx) => ProductEdit(),

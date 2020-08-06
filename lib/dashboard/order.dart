@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../auth/shell.dart';
 import '../order/list.dart';
 import '../product/model.dart';
-import '../service.dart';
+import '../service-provider.dart';
 
 class SellerOrderList extends StatelessWidget {
   @override

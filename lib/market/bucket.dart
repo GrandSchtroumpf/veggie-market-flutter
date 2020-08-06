@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../product/model.dart';
-import '../service.dart';
+import '../service-provider.dart';
 import './item.dart';
 
 class MarketBucket extends StatelessWidget {

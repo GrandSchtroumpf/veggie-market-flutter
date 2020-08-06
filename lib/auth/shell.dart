@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:veggie_market/service.dart';
+import 'package:veggie_market/service-provider.dart';
 import './login.dart';
 import './drawer.dart';
 import './avatar.dart';

@@ -4,7 +4,7 @@ import 'package:badges/badges.dart';
 import '../auth/shell.dart';
 import '../product/model.dart';
 import '../seller/model.dart';
-import '../service.dart';
+import '../service-provider.dart';
 import './item.dart';
 
 class BuyerProductList extends StatelessWidget {

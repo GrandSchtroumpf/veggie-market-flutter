@@ -1,5 +1,5 @@
 import 'package:rxdart/rxdart.dart';
-import '../_service.dart';
+import '../service.dart';
 import '../product/model.dart';
 import './model.dart';
 

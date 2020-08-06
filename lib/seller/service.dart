@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:rxdart/rxdart.dart';
-import '../_service.dart';
+import '../service.dart';
 import './model.dart';
 
 class SellerService extends CollectionService<Seller> {

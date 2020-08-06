@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../service.dart';
+import '../service-provider.dart';
 import '../seller/service.dart';
 import './avatar.dart';
 
@@ -31,23 +31,37 @@ class AuthDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [avatar(user), Text(user.email)],
+              children: [
+                avatar(user),
+                Text(user.email),
+                FlatButton(
+                  onPressed: () => service.becomeSeller(),
+                  child: Text('Click here to become a Seller'),
+                )
+              ],
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).accentColor,
             ),
           ),
           ListTile(
-            title: Text('Profile'),
+            title: Text('My Profile'),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/profile');
             },
           ),
-          FlatButton(
-            onPressed: () => service.becomeSeller(),
-            child: Text('Click here to become a Seller'),
+          ListTile(
+            leading: Icon(Icons.shopping_basket),
+            title: Text('Market'),
+            onTap: () => Navigator.pushReplacementNamed(context, '/m/list'),
+          ),
+          ListTile(
+            leading: Icon(Icons.store),
+            title: Text('My orders'),
+            onTap: () => Navigator.pushReplacementNamed(context, '/m/order'),
           )
         ],
       ),

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../_service.dart';
+import '../service.dart';
 import './model.dart';
 
 class ProductService extends SubAuthCollectionService<Product> {
@@ -19,7 +19,7 @@ class ProductService extends SubAuthCollectionService<Product> {
         );
 
   Stream<List<List<Product>>> queryFromSellers(Iterable<String> ids,
-      [Query Function(CollectionReference) queryFn]) {
+      [Query Function(Query) queryFn]) {
     final queries = ids.map((id) => query(id, queryFn));
     return CombineLatestStream.list(queries).asBroadcastStream();
   }
