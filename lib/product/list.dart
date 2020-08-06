@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../image/empty.dart';
 import './model.dart';
 
 class ProductList extends StatelessWidget {
@@ -9,7 +10,7 @@ class ProductList extends StatelessWidget {
   ProductList({
     this.query,
     this.builder,
-    this.whenEmpty = const Text('Empty'),
+    this.whenEmpty,
   });
 
   @override
@@ -18,7 +19,7 @@ class ProductList extends StatelessWidget {
       stream: query,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return whenEmpty;
+          return whenEmpty ?? Empty('There is not product here.');
         }
         List<Product> products = snapshot.data;
         return ListView.builder(

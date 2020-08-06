@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veggie_market/image/empty.dart';
 import './model.dart';
 
 class SellerList extends StatelessWidget {
@@ -9,7 +10,7 @@ class SellerList extends StatelessWidget {
   SellerList({
     this.query,
     this.builder,
-    this.whenEmpty = const Text('Empty'),
+    this.whenEmpty,
   });
 
   @override
@@ -18,7 +19,7 @@ class SellerList extends StatelessWidget {
       stream: query,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return whenEmpty;
+          return whenEmpty ?? Empty('We could not find any seller.');
         }
         List<Seller> sellers = snapshot.data;
         return ListView.builder(

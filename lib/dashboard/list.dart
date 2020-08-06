@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import '../image/empty.dart';
 import '../service-provider.dart';
 import '../product/model.dart';
 import '../auth/shell.dart';
@@ -24,27 +24,7 @@ class ProductList extends StatelessWidget {
 
           /// EMPTY ///
           if (snapshot.data.length == 0) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'You list is empty',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  SvgPicture.asset(
-                    'assets/img/empty.svg',
-                    semanticsLabel: 'No product',
-                    width: 300.0,
-                  ),
-                  Text(
-                    'Click on the + button below to create a product.',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ],
-              ),
-            );
+            return Empty('Click on the + button below to create a product.');
           }
 
           /// LIST ///

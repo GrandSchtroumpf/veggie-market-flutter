@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../image/empty.dart';
 import './model.dart';
 
 class OrderList extends StatefulWidget {
@@ -11,7 +12,7 @@ class OrderList extends StatefulWidget {
       {this.query,
       this.headerBuilder,
       this.itemBuilder,
-      this.whenEmpty = const Text('Empty'),
+      this.whenEmpty,
       this.whenLoading = const Center(child: CircularProgressIndicator())});
 
   @override
@@ -60,7 +61,7 @@ class OrderListState extends State<OrderList> {
           return whenLoading;
         }
         if (snapshot.data.length == 0) {
-          return whenEmpty;
+          return whenEmpty ?? Empty('No Order yet.');
         }
         List<Order> orders = snapshot.data;
         final panels = orders.map((order) => this.panel(context, order));

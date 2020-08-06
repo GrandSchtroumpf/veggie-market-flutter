@@ -47,6 +47,7 @@ class AuthDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.account_circle),
             title: Text('My Profile'),
             onTap: () {
               Navigator.pop(context);
@@ -61,8 +62,19 @@ class AuthDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.store),
             title: Text('My orders'),
-            onTap: () => Navigator.pushReplacementNamed(context, '/m/order'),
-          )
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/m/order');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Signout'),
+            onTap: () {
+              Navigator.pop(context);
+              _auth.signOut();
+            },
+          ),
         ],
       ),
     );
@@ -83,6 +95,7 @@ class AuthDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.account_circle),
             title: Text('Profile'),
             onTap: () {
               Navigator.pop(context);
@@ -97,7 +110,10 @@ class AuthDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.store),
             title: Text('Current orders'),
-            onTap: () => Navigator.pushReplacementNamed(context, '/d/order'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/d/order');
+            },
           ),
           ListTile(
             leading: Icon(Icons.shopping_basket),

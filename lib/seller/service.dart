@@ -23,6 +23,8 @@ class SellerService extends CollectionService<Seller> {
   }
 
   becomeSeller() {
-    _auth.currentUser().then((user) => doc(user.uid).set({}));
+    _auth
+        .currentUser()
+        .then((user) => doc(user.uid).set({'name': 'Schtroumpf'}));
   }
 }

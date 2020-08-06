@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:badges/badges.dart';
+import '../image/empty.dart';
 import '../auth/shell.dart';
 import '../product/model.dart';
 import '../seller/model.dart';
@@ -22,7 +23,7 @@ class BuyerProductList extends StatelessWidget {
             return Text('Loading Sellers');
           }
           if (snapshot.data.length == 0) {
-            return empty(context);
+            return Empty('We couldn not find any seller.');
           }
           final sellers = snapshot.data;
           final sellerIds = sellers.map((seller) => seller.id);
@@ -44,14 +45,14 @@ class BuyerProductList extends StatelessWidget {
                 allProduct[i].forEach((product) => all.add(product));
               });
               if (all.length == sellers.length) {
-                return empty(context);
+                return Empty('There is nothing here yet.');
               }
               return ListView.builder(
                 itemCount: all.length,
                 itemBuilder: (context, i) {
                   final item = all[i];
                   if (item is Seller) {
-                    return ListTile(title: Text(item.name));
+                    return ListTile(title: Text(item.name ?? 'Unknow'));
                   } else if (item is Product) {
                     return MarketItem(item);
                   } else {
@@ -73,26 +74,6 @@ class BuyerProductList extends StatelessWidget {
           ),
           child: Icon(Icons.shopping_basket),
         ),
-      ),
-    );
-  }
-
-  empty(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            'assets/img/empty.svg',
-            semanticsLabel: 'No product',
-            width: 300.0,
-          ),
-          Text(
-            'There is nothing here yet.',
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-        ],
       ),
     );
   }
