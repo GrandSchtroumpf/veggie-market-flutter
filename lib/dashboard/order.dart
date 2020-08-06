@@ -32,7 +32,9 @@ class SellerOrderList extends StatelessWidget {
                   backgroundImage: NetworkImage(product.image),
                 ),
                 title: Text(product.name),
-                subtitle: Text('${item.amount} * ${item.price}€'),
+                subtitle: Text(
+                  '${item.amount}${product.unit} * ${item.productPrice}€',
+                ),
                 trailing: Text('${item.price}€'),
               );
             },

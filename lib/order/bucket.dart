@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../market/order.dart';
+import '../market/order-validation.dart';
 import '../product/model.dart';
 
 class Bucket {
@@ -49,7 +49,7 @@ class Bucket {
     } else {
       return showDialog(
         context: context,
-        builder: (context) => OrderPage(),
+        builder: (context) => OrderValidation(),
       );
     }
   }

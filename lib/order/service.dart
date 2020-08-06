@@ -12,7 +12,7 @@ class OrderService extends SubAuthCollectionService<Order> {
           name: 'orders',
         );
 
-  Stream<List<Order>> queryByEmail(String email) {
+  Stream<List<Order>> queryByEmail() {
     return auth.onAuthStateChanged
         .where((user) => user != null)
         .map((user) => user.email)
