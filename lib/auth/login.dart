@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../intl.dart';
 
 class SigninForm {
   String email;
@@ -7,11 +8,13 @@ class SigninForm {
 }
 
 class Login extends StatelessWidget {
+  final intl = const Intl('auth.login');
   final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _form = SigninForm();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  get email {
+  email(BuildContext context) {
     return TextFormField(
       decoration: const InputDecoration(
         labelText: 'Email',
@@ -19,25 +22,31 @@ class Login extends StatelessWidget {
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.emailAddress,
       onSaved: (String email) => _form.email = email,
+      validator: (String value) =>
+          value.length > 0 ? null : intl.string(context, 'email-validator'),
     );
   }
 
-  get password {
+  password(BuildContext context) {
     return TextFormField(
-      decoration: const InputDecoration(
-        labelText: 'Password',
+      decoration: InputDecoration(
+        labelText: intl.string(context, 'password-label'),
+        hintText: intl.string(context, 'password-hint'),
       ),
       obscureText: true,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.visiblePassword,
       onSaved: (String password) => _form.password = password,
+      validator: (String value) =>
+          value.length >= 6 ? null : intl.string(context, 'password-validator'),
     );
   }
 
-  get confirm {
+  confirm(BuildContext context) {
     return TextFormField(
-      decoration: const InputDecoration(
-        labelText: 'Confirm Password',
+      decoration: InputDecoration(
+        labelText: intl.string(context, 'confirm-label'),
+        hintText: intl.string(context, 'confirm-hint'),
       ),
       obscureText: true,
       textInputAction: TextInputAction.done,
@@ -45,7 +54,7 @@ class Login extends StatelessWidget {
       onEditingComplete: () => _formKey.currentState.validate(),
       validator: (String value) => _form.password == value
           ? null
-          : 'Password does not match with the one provided',
+          : intl.string(context, 'confirm-validator'),
     );
   }
 
@@ -64,13 +73,14 @@ class Login extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
-            title: Text('Connection'),
+            title: intl.text('title'),
             bottom: TabBar(
               isScrollable: false,
               tabs: [
-                Tab(text: 'Signin'),
-                Tab(text: 'Signup'),
+                Tab(text: intl.string(context, 'signin')),
+                Tab(text: intl.string(context, 'signup')),
               ],
             )),
         body: Form(
@@ -79,38 +89,48 @@ class Login extends StatelessWidget {
             children: [
               /// SIGNIN ///
               shell([
-                email,
-                password,
+                email(context),
+                password(context),
                 RaisedButton(
-                  child: Text('Signin'),
+                  child: intl.text('signin'),
                   color: Theme.of(context).primaryColor,
                   onPressed: () async {
-                    _formKey.currentState.save();
-                    await _auth.signInWithEmailAndPassword(
-                      email: _form.email,
-                      password: _form.password,
-                    );
-                    Navigator.pop(context, _form.email);
+                    if (_formKey.currentState.validate()) {
+                      try {
+                        _formKey.currentState.save();
+                        await _auth.signInWithEmailAndPassword(
+                          email: _form.email,
+                          password: _form.password,
+                        );
+                        Navigator.pop(context, _form.email);
+                      } catch (err) {
+                        showSnackBar(err.code);
+                      }
+                    }
                   },
                 ),
               ]),
 
               /// SIGNUP ///
               shell([
-                email,
-                password,
-                confirm,
+                email(context),
+                password(context),
+                confirm(context),
                 RaisedButton(
-                  child: Text('Signup'),
+                  child: intl.text('signup'),
                   color: Theme.of(context).primaryColor,
                   onPressed: () async {
                     _formKey.currentState.save();
                     if (_formKey.currentState.validate()) {
-                      await _auth.createUserWithEmailAndPassword(
-                        email: _form.email,
-                        password: _form.password,
-                      );
-                      Navigator.pop(context, _form.email);
+                      try {
+                        await _auth.createUserWithEmailAndPassword(
+                          email: _form.email,
+                          password: _form.password,
+                        );
+                        Navigator.pop(context, _form.email);
+                      } catch (err) {
+                        showSnackBar(err.code);
+                      }
                     }
                   },
                 ),
@@ -120,5 +140,13 @@ class Login extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<SnackBarClosedReason> showSnackBar(String key) {
+    final snackBar = SnackBar(
+      content: intl.text(key),
+      duration: Duration(seconds: 3),
+    );
+    return _scaffoldKey.currentState.showSnackBar(snackBar).closed;
   }
 }

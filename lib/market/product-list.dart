@@ -89,9 +89,7 @@ class BuyerProductList extends StatelessWidget {
         maxRadius: 16.0,
         backgroundImage: seller.image != null
             ? NetworkImage(seller.image)
-            : AssetImage(
-                'assets/img/seller.png',
-              ),
+            : AssetImage('assets/img/seller.png'),
       ),
     );
   }

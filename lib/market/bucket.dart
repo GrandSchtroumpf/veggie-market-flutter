@@ -55,20 +55,11 @@ class BuyerBucket extends StatelessWidget {
               }
               try {
                 await orderService.createFromBucket(email, bucket.items);
-                final snackBar = SnackBar(
-                  content: intl.text('order-success'),
-                  duration: Duration(seconds: 3),
-                );
-                await _key.currentState.showSnackBar(snackBar).closed;
-
+                await showSnackBar('order-success');
                 Navigator.pop(context);
                 bucket.clear();
               } catch (err) {
-                final snackBar = SnackBar(
-                  content: intl.text('order-failed'),
-                  duration: Duration(seconds: 3),
-                );
-                _key.currentState.showSnackBar(snackBar);
+                await showSnackBar('order-failed');
               }
             },
           ),
@@ -77,6 +68,14 @@ class BuyerBucket extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<SnackBarClosedReason> showSnackBar(String key) {
+    final snackBar = SnackBar(
+      content: intl.text(key),
+      duration: Duration(seconds: 3),
+    );
+    return _key.currentState.showSnackBar(snackBar).closed;
   }
 }
 

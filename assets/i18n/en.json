@@ -1,4 +1,31 @@
 {
+  "auth": {
+    "login": {
+      "title": "Connection",
+      "signin": "Signin",
+      "signup": "Signup",
+      "email-validator": "Email is mandatory.",
+      "password-label": "Password",
+      "password-hint": "At least 6 characters.",
+      "password-validator": "Password should be at least 6 characters.",
+      "confirm-label": "Confirm password",
+      "confirm-hint": "Same as password above.",
+      "confirm-validator": "Password does not match with the one provided",
+      "ERROR_WEAK_PASSWORD": "Password is too weak.",
+      "ERROR_INVALID_EMAIL": "Email is not well formatted.",
+      "ERROR_EMAIL_ALREADY_IN_USE": "Email is already in use.",
+      "ERROR_WRONG_PASSWORD": "Password doesn't match email account",
+      "ERROR_USER_NOT_FOUND": "No user found for this email account",
+      "ERROR_TOO_MANY_REQUESTS": "Too many attempt to signin, please try again later."
+    }
+  },
+  "drawer": {
+    "profile": "My profile",
+    "products": "My products",
+    "market": "Market",
+    "order": "My orders",
+    "signout": "Signout"
+  },
   "buyer": {
     "product-list": {
       "title": "Market",

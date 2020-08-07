@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../intl.dart';
 import '../service-provider.dart';
 import '../seller/service.dart';
 import './avatar.dart';
 
 class AuthDrawer extends StatelessWidget {
+  final intl = const Intl('drawer');
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final FirebaseUser user;
@@ -48,12 +50,12 @@ class AuthDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.shopping_basket),
-            title: Text('Market'),
+            title: intl.text('market'),
             onTap: () => Navigator.pushReplacementNamed(context, '/m/list'),
           ),
           ListTile(
             leading: Icon(Icons.store),
-            title: Text('My orders'),
+            title: intl.text('order'),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/m/order');
@@ -61,7 +63,7 @@ class AuthDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app),
-            title: Text('Signout'),
+            title: intl.text('signout'),
             onTap: () {
               Navigator.pop(context);
               _auth.signOut();
@@ -88,7 +90,7 @@ class AuthDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.account_circle),
-            title: Text('My Profile'),
+            title: intl.text('profile'),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/seller/edit');
@@ -96,12 +98,12 @@ class AuthDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.dashboard),
-            title: Text('My products'),
+            title: intl.text('product'),
             onTap: () => Navigator.pushReplacementNamed(context, '/d/list'),
           ),
           ListTile(
             leading: Icon(Icons.store),
-            title: Text('Current orders'),
+            title: intl.text('order'),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/d/order');
@@ -109,12 +111,12 @@ class AuthDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.shopping_basket),
-            title: Text('Market'),
+            title: intl.text('market'),
             onTap: () => Navigator.pushReplacementNamed(context, '/m/list'),
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app),
-            title: Text('Signout'),
+            title: intl.text('signout'),
             onTap: () {
               Navigator.pop(context);
               _auth.signOut();

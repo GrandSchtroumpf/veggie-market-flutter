@@ -1,4 +1,31 @@
 {
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "signin": "Connexion",
+      "signup": "Créer un compte",
+      "email-validator": "L'email est obligatoire.",
+      "password-label": "Mot de passe",
+      "password-hint": "Au moins 6 charactères.",
+      "password-validator": "Le mot de passe doit faire au minimum 6 charactères.",
+      "confirm-label": "Confirmer le mot de passe",
+      "confirm-hint": "Le même que celui au dessus.",
+      "confirm-validator": "Les mots de passe ne correspondent pas.",
+      "ERROR_WEAK_PASSWORD": "Le mot de passe n'est pas assez sécurisé.",
+      "ERROR_INVALID_EMAIL": "L'email n'est pas bien formaté.",
+      "ERROR_EMAIL_ALREADY_IN_USE": "L'email est déjà utlisé",
+      "ERROR_WRONG_PASSWORD": "Le mot de passe ne correspond pas au compte de l'email.",
+      "ERROR_USER_NOT_FOUND": "Aucun utilisateur trouvé pour cet email.",
+      "ERROR_TOO_MANY_REQUESTS": "Trop d'essais de connection. Recommencez ultérieurement."
+    }
+  },
+  "drawer": {
+    "profile": "Mon profil",
+    "products": "Mes produits",
+    "market": "Marché",
+    "order": "Mes commandes",
+    "signout": "Se déconnecter"
+  },
   "buyer": {
     "product-list": {
       "title": "Marché",
