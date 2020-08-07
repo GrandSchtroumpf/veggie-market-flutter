@@ -20,9 +20,9 @@ class Product {
     this.image,
     this.file,
     this.unit,
-    this.name = '',
-    this.price = 0.0,
-    this.stock = 0,
+    this.name,
+    this.price,
+    this.stock,
   });
 
   String get id {

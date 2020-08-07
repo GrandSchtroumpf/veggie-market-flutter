@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../intl.dart';
 import '../image/form.dart';
 import './model.dart';
 
 class ProductForm extends StatelessWidget {
+  final intl = const Intl('seller.product-form');
   final _formKey = GlobalKey<FormState>();
   final Product product;
   final Function onSubmit;
@@ -32,9 +34,9 @@ class ProductForm extends StatelessWidget {
               /// NAME ///
               TextFormField(
                 initialValue: product.name,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  hintText: 'The name of the product',
+                decoration: InputDecoration(
+                  labelText: intl.string(context, 'name-label'),
+                  hintText: intl.string(context, 'name-hint'),
                 ),
                 keyboardType: TextInputType.text,
                 onSaved: (String name) => product.name = name,
@@ -42,10 +44,10 @@ class ProductForm extends StatelessWidget {
 
               /// PRICE ///
               TextFormField(
-                initialValue: product.price.toString(),
-                decoration: const InputDecoration(
-                  labelText: 'Price',
-                  hintText: '€ / unit',
+                initialValue: product.price?.toString(),
+                decoration: InputDecoration(
+                  labelText: intl.string(context, 'price-label'),
+                  hintText: intl.string(context, 'price-hint'),
                 ),
                 keyboardType: TextInputType.number,
                 onSaved: (String price) => product.price = double.parse(price),
@@ -53,10 +55,10 @@ class ProductForm extends StatelessWidget {
 
               /// STOCK ///
               TextFormField(
-                initialValue: product.stock.toString(),
-                decoration: const InputDecoration(
-                  labelText: 'Stock',
-                  hintText: 'Current amount available',
+                initialValue: product.stock?.toString(),
+                decoration: InputDecoration(
+                  labelText: intl.string(context, 'stock-label'),
+                  hintText: intl.string(context, 'stock-hint'),
                 ),
                 keyboardType: TextInputType.number,
                 onSaved: (String stock) => product.stock = int.parse(stock),
@@ -65,9 +67,9 @@ class ProductForm extends StatelessWidget {
               /// UNIT ///
               DropdownButtonFormField(
                 value: product.unit,
-                decoration: const InputDecoration(
-                  labelText: 'Unit',
-                  hintText: 'kg or per unit',
+                decoration: InputDecoration(
+                  labelText: intl.string(context, 'unit-label'),
+                  hintText: intl.string(context, 'unit-hint'),
                 ),
                 items: [
                   DropdownMenuItem(
@@ -85,7 +87,7 @@ class ProductForm extends StatelessWidget {
 
               /// SAVE ///
               RaisedButton(
-                child: Text('Save Product'),
+                child: intl.text('submit'),
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
                   _formKey.currentState.save();

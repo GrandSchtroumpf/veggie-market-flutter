@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../intl.dart';
 import '../image/form.dart';
 import './model.dart';
 
 class SellerForm extends StatelessWidget {
+  final intl = const Intl('seller.seller-form');
   final _formKey = GlobalKey<FormState>();
   final Seller seller;
   final Function onSubmit;
@@ -32,9 +34,9 @@ class SellerForm extends StatelessWidget {
               /// NAME ///
               TextFormField(
                 initialValue: seller.name,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  hintText: 'The name of the seller',
+                decoration: InputDecoration(
+                  labelText: intl.string(context, 'name-label'),
+                  hintText: intl.string(context, 'name-hint'),
                 ),
                 keyboardType: TextInputType.text,
                 onSaved: (String name) => seller.name = name,
@@ -42,7 +44,7 @@ class SellerForm extends StatelessWidget {
 
               /// SAVE ///
               RaisedButton(
-                child: Text('Save'),
+                child: intl.text('submit'),
                 color: Theme.of(context).primaryColor,
                 onPressed: () {
                   _formKey.currentState.save();

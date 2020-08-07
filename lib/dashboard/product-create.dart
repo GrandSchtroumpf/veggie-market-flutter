@@ -5,7 +5,7 @@ import '../product/model.dart';
 import '../product/form.dart';
 
 class ProductCreate extends StatelessWidget {
-  final intl = const Intl('seller-create');
+  final intl = const Intl('product-create');
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;

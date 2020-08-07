@@ -26,6 +26,9 @@
     "order": "My orders",
     "signout": "Signout"
   },
+  "image": {
+    "pick": "Pick an image or use Camera"
+  },
   "buyer": {
     "product-list": {
       "title": "Market",
@@ -69,12 +72,28 @@
     "product-edit": {
       "title": "Modify product"
     },
+    "product-form": {
+      "name-label": "Name",
+      "name-hint": "Name of a product",
+      "price-label": "Price",
+      "price-hint": "Euro per unit",
+      "stock-label": "Stock",
+      "stock-hint": "Amount currently available",
+      "unit-label": "Unit used for the product",
+      "unit-hint": "Depending on the product: per kg or per unit",
+      "submit": "Save"
+    },
     "order-list": {
       "title": "My orders",
       "loading": "Loading orders"
     },
     "seller-edit": {
       "title": "Modify your profile"
+    },
+    "seller-form": {
+      "name-label": "Name",
+      "name-hint": "Name of your company",
+      "sumbit": "Save"
     }
   }
 }

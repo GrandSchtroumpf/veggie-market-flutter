@@ -6,7 +6,7 @@ import '../product/model.dart';
 import '../product/form.dart';
 
 class ProductEdit extends StatelessWidget {
-  final intl = const Intl('seller-edit');
+  final intl = const Intl('seller.product-edit');
 
   @override
   Widget build(BuildContext context) {

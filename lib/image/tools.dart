@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import '../intl.dart';
 
 ///////////////
 /// DISPLAY ///
@@ -37,6 +38,7 @@ class DisplayImage extends StatelessWidget {
 ////////////
 
 class PickImage extends StatelessWidget {
+  final intl = const Intl('image');
   final imgPicker = ImagePicker();
   final Function(File) onPicked;
   PickImage({this.onPicked});
@@ -63,7 +65,7 @@ class PickImage extends StatelessWidget {
       children: [
         Center(
           heightFactor: 5.0,
-          child: Text('Pick an image or use Camera'),
+          child: intl.text('pick'),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

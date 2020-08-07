@@ -26,6 +26,9 @@
     "order": "Mes commandes",
     "signout": "Se déconnecter"
   },
+  "image": {
+    "pick": "Choisir une image ou utiliser la caméra"
+  },
   "buyer": {
     "product-list": {
       "title": "Marché",
@@ -69,12 +72,28 @@
     "product-edit": {
       "title": "Modifier le produit"
     },
+    "product-form": {
+      "name-label": "Nom du produit",
+      "name-hint": "Nom du produit",
+      "price-label": "Prix",
+      "price-hint": "Euro par unité",
+      "stock-label": "Stock",
+      "stock-hint": "Quantité actuellement disponible",
+      "unit-label": "Unité utilisé par le produit",
+      "unit-hint": "Selon le produit: kg ou par unité",
+      "submit": "Enregistrer"
+    },
     "order-list": {
       "title": "Mes commandes",
       "loading": "Nous chargeons vos commandes"
     },
     "seller-edit": {
       "title": "Modifier votre profil"
+    },
+    "seller-form": {
+      "name-label": "Nom",
+      "name-hint": "Nom de votre entreprise",
+      "sumbit": "Enregistrer"
     }
   }
 }
