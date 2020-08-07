@@ -21,31 +21,38 @@ class BuyerBucket extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
 
+        if (snapshot.data.length == 0) {
+          return Scaffold(
+              appBar: AppBar(title: intl.text('title')),
+              body: Empty(intl.key('empty')));
+        }
+
         /// BUCKET ///
         final List<Product> products = snapshot.data;
         return Scaffold(
           key: _key,
           appBar: AppBar(title: intl.text('title')),
-          body: products.length == 0
-              ? Empty(intl.key('empty'))
-              : ListView.builder(
-                  itemCount: products.length + 1,
-                  itemBuilder: (context, i) {
-                    if (i == products.length) {
-                      return TotalPrice(products);
-                    } else {
-                      return ProductItem(
-                        products[i],
-                        trailing: OrderItemCount(products[i]),
-                      );
-                    }
-                  },
-                ),
+          body: ListView.builder(
+            itemCount: products.length + 1,
+            itemBuilder: (context, i) {
+              if (i == products.length) {
+                return TotalPrice(products);
+              } else {
+                return ProductItem(
+                  products[i],
+                  trailing: OrderItemCount(products[i]),
+                );
+              }
+            },
+          ),
           floatingActionButton: FloatingActionButton.extended(
             label: intl.text('order'),
             icon: Icon(Icons.send),
             onPressed: () async {
               String email = await bucket.getEmail(context);
+              if (email == null) {
+                return;
+              }
               try {
                 await orderService.createFromBucket(email, bucket.items);
                 final snackBar = SnackBar(
