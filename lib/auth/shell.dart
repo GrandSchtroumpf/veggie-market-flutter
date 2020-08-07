@@ -9,7 +9,7 @@ class AuthShell extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final Widget body;
   final Widget floatingActionButton;
-  final String title;
+  final Widget title;
 
   AuthShell({this.title, this.body, this.floatingActionButton});
 
@@ -45,7 +45,7 @@ class AuthShell extends StatelessWidget {
         return Scaffold(
           key: _key,
           appBar: AppBar(
-            title: Text(title),
+            title: title,
             leading: user != null ? avatarButton(user) : loginButton(context),
           ),
           body: body,

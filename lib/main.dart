@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:veggie_market/dashboard/seller-edit.dart';
 import './market/product-list.dart';
-import 'market/product-view.dart';
-import './market/bucket.dart';
-import './market/order.dart';
+import './market/product-view.dart';
+import 'market/bucket.dart';
+import 'market/order-list.dart';
 import './dashboard/list.dart';
 import './dashboard/create.dart';
 import './dashboard/edit.dart';
@@ -12,6 +13,8 @@ import './dashboard/order.dart';
 import './auth/login.dart';
 import './auth/profile.dart';
 import 'service-provider.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(Root());
@@ -43,11 +46,25 @@ class App extends StatelessWidget {
     return ServiceProvider(
       child: MaterialApp(
         title: 'Flutter Demo',
+        localizationsDelegates: [
+          FlutterI18nDelegate(
+            translationLoader: FileTranslationLoader(basePath: 'assets/i18n'),
+            missingTranslationHandler: (key, locale) {
+              print("Missing Key: $key, languageCode: ${locale.languageCode}");
+            },
+          ),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', ''),
+          const Locale('fr', ''),
+        ],
         initialRoute: '/m/list',
         routes: {
           '/login': (ctx) => Login(),
           '/profile': (ctx) => Profile(),
-          '/m/bucket': (ctx) => MarketBucket(),
+          '/m/bucket': (ctx) => BuyerBucket(),
           '/m/list': (ctx) => BuyerProductList(),
           '/m/view': (ctx) => BuyerProductView(),
           '/m/order': (ctx) => BuyerOrderList(),

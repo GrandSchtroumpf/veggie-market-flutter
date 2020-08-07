@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import '../intl.dart';
 import '../auth/login.dart';
 
 class OrderValidation extends StatelessWidget {
+  final intl = const Intl('buyer.order-validation');
+
   @override
   Widget build(BuildContext context) {
     String email;
     return Scaffold(
-      appBar: AppBar(title: Text('Order')),
+      appBar: AppBar(title: intl.text('title')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -19,16 +22,20 @@ class OrderValidation extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('We need an email to identify your order.'),
+                    child: intl.text('description'),
                   ),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (String value) => email = value,
                     decoration: InputDecoration(
-                      labelText: 'Enter your email',
-                      hintText: 'email used to retrieve your order.',
+                      labelText: intl.string(context, 'email-text'),
+                      hintText: intl.string(context, 'email-hint'),
                       border: new OutlineInputBorder(),
                     ),
+                  ),
+                  RaisedButton(
+                    onPressed: () => Navigator.pop(context, email),
+                    child: intl.text('email-submit'),
                   ),
                 ],
               ),
@@ -40,7 +47,7 @@ class OrderValidation extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Or use an account.'),
+                    child: intl.text('use-account'),
                   ),
                   RaisedButton(
                     color: Theme.of(context).accentColor,
@@ -53,7 +60,7 @@ class OrderValidation extends StatelessWidget {
                         Navigator.pop(context, email);
                       }
                     },
-                    child: Text('Signin or Signup'),
+                    child: intl.text('connection'),
                   ),
                 ],
               ),

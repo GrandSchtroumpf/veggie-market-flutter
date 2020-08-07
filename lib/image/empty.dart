@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Empty extends StatelessWidget {
-  final String text;
-  Empty(this.text);
+  final String intlKey;
+  Empty(this.intlKey);
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -13,11 +14,11 @@ class Empty extends StatelessWidget {
         children: [
           SvgPicture.asset(
             'assets/img/empty.svg',
-            semanticsLabel: 'No product',
+            semanticsLabel: 'Empty',
             width: 300.0,
           ),
           Text(
-            text,
+            FlutterI18n.translate(context, intlKey),
             style: Theme.of(context).textTheme.subtitle1,
           ),
         ],

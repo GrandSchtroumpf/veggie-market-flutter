@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:veggie_market/product/model.dart';
+import '../intl.dart';
 import '../product/view.shell.dart';
 
 class BuyerProductView extends StatelessWidget {
+  final intl = const Intl('buyer.product-view');
+
   @override
   Widget build(BuildContext context) {
     return ProductViewShell(
@@ -17,11 +21,6 @@ class BuyerProductView extends StatelessWidget {
               Text(
                 product.name,
                 style: Theme.of(context).textTheme.headline3,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                '${product.price}€/${product.unit} - ${product.stock} in stock.',
-                style: Theme.of(context).textTheme.subtitle1,
                 textAlign: TextAlign.center,
               ),
             ],

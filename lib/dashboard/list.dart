@@ -9,7 +9,7 @@ class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
     return AuthShell(
-      title: 'Dashboard',
+      title: Text('Dashboard'),
       body: StreamBuilder<List<Product>>(
         stream: service.queryOwn(),
         builder: (context, snapshot) {

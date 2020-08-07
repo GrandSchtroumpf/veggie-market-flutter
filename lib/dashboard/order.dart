@@ -10,7 +10,7 @@ class SellerOrderList extends StatelessWidget {
     final productService = ServiceProvider.of(context).product;
     final orderService = ServiceProvider.of(context).order;
     return AuthShell(
-      title: 'Orders',
+      title: Text('Orders'),
       body: OrderList(
         query: orderService.queryOwn(),
         headerBuilder: (context, order) {

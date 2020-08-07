@@ -1,0 +1,37 @@
+{
+  "buyer": {
+    "product-list": {
+      "title": "Market",
+      "loading-seller": "Loading sellers.",
+      "empty-seller": "We couldn't find any seller.",
+      "loading-product": "Loading product.",
+      "empty-product": "We couldn't find any product."
+    },
+    "product-item": {
+      "stock": "available"
+    },
+    "bucket": {
+      "title": "Bucket",
+      "empty": "Your bucket is empty.",
+      "order": "Send your order",
+      "order-success": "Thank you for your order 😘.",
+      "order-failed": "Could not send order 🙁."
+    },
+    "offer-validation": {
+      "title": "Order Validation",
+      "description": "We need an email to identify your order.",
+      "email-label": "Entrer email",
+      "email-hint": "email used to retrieve your order.",
+      "email-submit": "Validate your email",
+      "use-account": "Create an account or use an existing one.",
+      "connection": "Signin"
+    },
+    "order-list": {
+      "title": "My orders",
+      "loading": "Loading orders..."
+    }
+  },
+  "seller": {
+
+  }
+}

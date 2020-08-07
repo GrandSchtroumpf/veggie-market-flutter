@@ -1,0 +1,37 @@
+{
+  "buyer": {
+    "product-list": {
+      "title": "Marché",
+      "loading-seller": "Chargement des vendeurs.",
+      "empty-seller": "Nous n'avons trouvé aucun vendeurs.",
+      "loading-product": "Chargement des produits.",
+      "empty-product": "Nous n'avons trouvé aucun produit."
+    },
+    "product-item": {
+      "stock": "disponible"
+    },
+    "bucket": {
+      "title": "Panier",
+      "empty": "Votre panier est vide.",
+      "order": "Passer commande",
+      "order-success": "Votre commande a bien été prise en compte 🎉.",
+      "order-failed": "Votre commande n'a pas été prise en compte 🙁."
+    },
+    "order-validation": {
+      "title": "Valider la commande",
+      "description": "Nous avons besoin d'un email pour valider votre commande.",
+      "email-label": "Entrer votre email ici",
+      "email-hint": "Cet email est utilisé pour récupérer votre commande.",
+      "email-submit": "Valider votre email",
+      "use-account": "Créer un compte ou utiliser un existant.",
+      "connection": "Se connecter"
+    },
+    "order-list": {
+      "title": "Mes commandes",
+      "loading": "Chargement des commandes en cours."
+    }
+  },
+  "seller": {
+
+  }
+}

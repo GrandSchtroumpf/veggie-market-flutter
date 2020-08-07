@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:veggie_market/image/empty.dart';
+import '../intl.dart';
 import '../product/model.dart';
 import '../service-provider.dart';
-import './item.dart';
+import 'product-item.dart';
 
-class MarketBucket extends StatelessWidget {
+class BuyerBucket extends StatelessWidget {
+  final intl = const Intl('buyer.bucket');
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -19,63 +21,44 @@ class MarketBucket extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
 
-        /// EMPTY ///
-        if (snapshot.data.length == 0) {
-          return Scaffold(
-            appBar: AppBar(title: Text('Empty Bucket')),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/img/empty.svg',
-                    semanticsLabel: 'No product',
-                    width: 300.0,
-                  ),
-                  Text(
-                    'Your bucket is empty.',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
-
         /// BUCKET ///
         final List<Product> products = snapshot.data;
         return Scaffold(
           key: _key,
-          appBar: AppBar(title: Text('Bucket')),
-          body: ListView.builder(
-            itemCount: products.length + 1,
-            itemBuilder: (context, i) {
-              if (i == products.length) {
-                return TotalPrice(products);
-              } else {
-                return MarketItem(products[i]);
-              }
-            },
-          ),
+          appBar: AppBar(title: intl.text('title')),
+          body: products.length == 0
+              ? Empty(intl.key('empty'))
+              : ListView.builder(
+                  itemCount: products.length + 1,
+                  itemBuilder: (context, i) {
+                    if (i == products.length) {
+                      return TotalPrice(products);
+                    } else {
+                      return ProductItem(
+                        products[i],
+                        trailing: OrderItemCount(products[i]),
+                      );
+                    }
+                  },
+                ),
           floatingActionButton: FloatingActionButton.extended(
-            label: Text('Send order'),
+            label: intl.text('order'),
             icon: Icon(Icons.send),
             onPressed: () async {
               String email = await bucket.getEmail(context);
               try {
                 await orderService.createFromBucket(email, bucket.items);
                 final snackBar = SnackBar(
-                  content: Text('Thank you for your order 😘.'),
+                  content: intl.text('order-success'),
                   duration: Duration(seconds: 3),
                 );
-                _key.currentState.showSnackBar(snackBar);
+                await _key.currentState.showSnackBar(snackBar).closed;
 
                 Navigator.pop(context);
                 bucket.clear();
               } catch (err) {
                 final snackBar = SnackBar(
-                  content: Text('Could not send order 🙁.'),
+                  content: intl.text('order-failed'),
                   duration: Duration(seconds: 3),
                 );
                 _key.currentState.showSnackBar(snackBar);
@@ -114,28 +97,6 @@ class TotalPrice extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class ProductItem extends StatelessWidget {
-  final Product product;
-  final int amount;
-  ProductItem(this.product, this.amount);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(product.image ?? productImg),
-      ),
-      title: Text(product.name),
-      subtitle: Text(
-        '${product.price}€/${product.unit} - ${product.stock} in stock.',
-      ),
-      trailing: Text(
-        amount.toString(),
-      ),
     );
   }
 }
