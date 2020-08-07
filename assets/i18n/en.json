@@ -51,7 +51,7 @@
       "title": "Order Validation",
       "description": "We need an email to identify your order. Create an account, or use an email for this time.",
       "email-label": "Entrer email",
-      "email-hint": "email used to retrieve your order.",
+      "email-hint": "Used to retrieve your order.",
       "email-submit": "Validate your email",
       "use-account": "Create an account or use an existing one.",
       "connection": "Signin"

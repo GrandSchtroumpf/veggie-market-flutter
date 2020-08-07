@@ -51,7 +51,7 @@
       "title": "Valider la commande",
       "description": "Nous avons besoin d'un email pour valider votre commande. Créer un compte ou utiliser votre email pour cette fois.",
       "email-label": "Entrer votre email ici",
-      "email-hint": "Cet email est utilisé pour récupérer votre commande.",
+      "email-hint": "Utilisé pour récupérer votre commande.",
       "email-submit": "Valider votre email",
       "use-account": "Créer un compte ou utiliser un existant.",
       "connection": "Se connecter"

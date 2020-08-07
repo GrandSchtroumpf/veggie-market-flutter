@@ -58,7 +58,7 @@ class OrderValidation extends StatelessWidget {
                           keyboardType: TextInputType.emailAddress,
                           onChanged: (String value) => email = value,
                           decoration: InputDecoration(
-                            labelText: intl.string(context, 'email-text'),
+                            labelText: intl.string(context, 'email-label'),
                             hintText: intl.string(context, 'email-hint'),
                             border: new OutlineInputBorder(),
                           ),
