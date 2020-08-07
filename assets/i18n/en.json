@@ -21,7 +21,7 @@
   },
   "drawer": {
     "profile": "My profile",
-    "products": "My products",
+    "product": "My products",
     "market": "Market",
     "order": "My orders",
     "signout": "Signout"
@@ -59,6 +59,22 @@
     }
   },
   "seller": {
-
+    "product-list": {
+      "title": "My Products",
+      "empty": "Click on the + button below to create a product."
+    },
+    "product-create": {
+      "title": "New product"
+    },
+    "product-edit": {
+      "title": "Modify product"
+    },
+    "order-list": {
+      "title": "My orders",
+      "loading": "Loading orders"
+    },
+    "seller-edit": {
+      "title": "Modify your profile"
+    }
   }
 }

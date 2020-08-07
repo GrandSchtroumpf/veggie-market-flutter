@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import '../intl.dart';
 import '../image/empty.dart';
 import '../service-provider.dart';
 import '../product/model.dart';
 import '../auth/shell.dart';
 
-class ProductList extends StatelessWidget {
+class SellerProductList extends StatelessWidget {
+  final intl = const Intl('seller.product-list');
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
     return AuthShell(
-      title: Text('Dashboard'),
+      title: intl.text('title'),
       body: StreamBuilder<List<Product>>(
         stream: service.queryOwn(),
         builder: (context, snapshot) {
@@ -24,7 +26,7 @@ class ProductList extends StatelessWidget {
 
           /// EMPTY ///
           if (snapshot.data.length == 0) {
-            return Empty('Click on the + button below to create a product.');
+            return Empty(intl.key('empty'));
           }
 
           /// LIST ///

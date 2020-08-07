@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import '../intl.dart';
 import '../service-provider.dart';
 import '../product/view.shell.dart';
 import '../product/model.dart';
 import '../product/form.dart';
 
 class ProductEdit extends StatelessWidget {
+  final intl = const Intl('seller-edit');
+
   @override
   Widget build(BuildContext context) {
     final service = ServiceProvider.of(context).product;
@@ -12,7 +15,7 @@ class ProductEdit extends StatelessWidget {
     return ProductViewShell(builder: (context, product) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Modify ${product.name}'),
+          title: intl.text('title'),
           actions: [
             IconButton(
               icon: Icon(Icons.delete),

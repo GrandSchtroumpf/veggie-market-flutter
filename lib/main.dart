@@ -6,10 +6,10 @@ import './market/product-list.dart';
 import './market/product-view.dart';
 import 'market/bucket.dart';
 import 'market/order-list.dart';
-import './dashboard/list.dart';
-import './dashboard/create.dart';
-import './dashboard/edit.dart';
-import './dashboard/order.dart';
+import 'dashboard/product-list.dart';
+import 'dashboard/product-create.dart';
+import 'dashboard/product-edit.dart';
+import 'dashboard/order-list.dart';
 import './auth/login.dart';
 import './auth/profile.dart';
 import 'service-provider.dart';
@@ -68,7 +68,7 @@ class App extends StatelessWidget {
           '/m/list': (ctx) => BuyerProductList(),
           '/m/view': (ctx) => BuyerProductView(),
           '/m/order': (ctx) => BuyerOrderList(),
-          '/d/list': (ctx) => ProductList(),
+          '/d/list': (ctx) => SellerProductList(),
           '/d/create': (ctx) => ProductCreate(),
           '/d/edit': (ctx) => ProductEdit(),
           '/d/order': (ctx) => SellerOrderList(),

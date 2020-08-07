@@ -21,7 +21,7 @@
   },
   "drawer": {
     "profile": "Mon profil",
-    "products": "Mes produits",
+    "product": "Mes produits",
     "market": "Marché",
     "order": "Mes commandes",
     "signout": "Se déconnecter"
@@ -59,6 +59,22 @@
     }
   },
   "seller": {
-
+    "product-list": {
+      "title": "Mes produits",
+      "empty": "Appuyez sur le bouton + en dessous pour ajouter un produit."
+    },
+    "product-create": {
+      "title": "Nouveau produit"
+    },
+    "product-edit": {
+      "title": "Modifier le produit"
+    },
+    "order-list": {
+      "title": "Mes commandes",
+      "loading": "Nous chargeons vos commandes"
+    },
+    "seller-edit": {
+      "title": "Modifier votre profil"
+    }
   }
 }
