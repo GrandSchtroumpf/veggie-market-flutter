@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "913285637155-na6l6s3ldkgbgj2683cmgsp62reofc44.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.veggie_market.app",
+            "certificate_hash": "03e85a76d0ae74b204f9be2c28cd54b0ee3a12f7"
+          }
+        },
+        {
           "client_id": "913285637155-07j5pu5ah9p86lccesvn5pg0h3d9597s.apps.googleusercontent.com",
           "client_type": 3
         }

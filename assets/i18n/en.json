@@ -93,7 +93,7 @@
     "seller-form": {
       "name-label": "Name",
       "name-hint": "Name of your company",
-      "sumbit": "Save"
+      "submit": "Save"
     }
   }
 }
