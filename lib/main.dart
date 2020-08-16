@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:veggie_market/dashboard/seller-edit.dart';
+import 'package:flutter/foundation.dart';
+import './dashboard/seller-edit.dart';
 import './market/product-list.dart';
 import './market/product-view.dart';
 import 'market/bucket.dart';
@@ -32,6 +34,18 @@ class Root extends StatelessWidget {
           throw (snapshot.error);
         }
         if (snapshot.connectionState == ConnectionState.done) {
+          // COMMENT FOR PRODUCTION
+          // Switch host based on platform.
+          String host = defaultTargetPlatform == TargetPlatform.android
+              ? '10.0.2.2:8080'
+              : 'localhost:8080';
+
+          // Set the host as soon as possible.
+          FirebaseFirestore.instance.settings = Settings(
+            host: host,
+            sslEnabled: false,
+            persistenceEnabled: false,
+          );
           return ServiceProvider(child: App());
         }
         return CircularProgressIndicator();

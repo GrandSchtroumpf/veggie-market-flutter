@@ -48,7 +48,7 @@ class BuyerProductList extends StatelessWidget {
                   allProduct[i].forEach((product) => all.add(product));
                 }
               });
-              if (all.length == sellers.length) {
+              if (all.length <= sellers.length) {
                 return Empty(intl.key('empty-product'));
               }
               return ListView.builder(
