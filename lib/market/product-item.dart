@@ -16,12 +16,25 @@ class ProductItem extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/m/view', arguments: product);
-            },
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(product.image ?? productImg),
+          child: SizedBox(
+            width: 40.0,
+            child: Hero(
+              tag: 'products.${product.id}.image',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Material(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/m/view',
+                        arguments: product,
+                      );
+                    },
+                    child: Image.network(product.image ?? productImg),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

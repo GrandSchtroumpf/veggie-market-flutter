@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:veggie_market/product/model.dart';
 import '../intl.dart';
 import '../product/view.shell.dart';
 
@@ -17,7 +16,10 @@ class BuyerProductView extends StatelessWidget {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.network(product.image, fit: BoxFit.fitWidth),
+              Hero(
+                tag: 'products.${product.id}.image',
+                child: Image.network(product.image, fit: BoxFit.fitWidth),
+              ),
               Text(
                 product.name,
                 style: Theme.of(context).textTheme.headline3,
