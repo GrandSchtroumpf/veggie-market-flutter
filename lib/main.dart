@@ -34,18 +34,18 @@ class Root extends StatelessWidget {
           throw (snapshot.error);
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          // COMMENT FOR PRODUCTION
+          // EMULATOR
           // Switch host based on platform.
-          String host = defaultTargetPlatform == TargetPlatform.android
-              ? '10.0.2.2:8080'
-              : 'localhost:8080';
+          // String host = defaultTargetPlatform == TargetPlatform.android
+          //     ? '10.0.2.2:8080'
+          //     : 'localhost:8080';
 
-          // Set the host as soon as possible.
-          FirebaseFirestore.instance.settings = Settings(
-            host: host,
-            sslEnabled: false,
-            persistenceEnabled: false,
-          );
+          // // Set the host as soon as possible.
+          // FirebaseFirestore.instance.settings = Settings(
+          //   host: host,
+          //   sslEnabled: false,
+          //   persistenceEnabled: false,
+          // );
           return ServiceProvider(child: App());
         }
         return CircularProgressIndicator();

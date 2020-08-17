@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../market/order-validation.dart';
+import '../market/payment.dart';
 import '../product/model.dart';
 
 class Bucket {
@@ -48,9 +49,9 @@ class Bucket {
       return user.email;
     } else {
       return showDialog(
-        context: context,
-        builder: (context) => OrderValidation(),
-      );
+          context: context,
+          builder: (context) => Payment() // OrderValidation(),
+          );
     }
   }
 }
