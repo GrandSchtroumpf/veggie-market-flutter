@@ -9,6 +9,7 @@ HttpsCallable callableFn(String name) {
 
 class PaymentService {
   final intent = callableFn('createPaymentIntent');
+  final createAccount = callableFn('createAccount').call;
   final states = {};
 
   PaymentService() {

@@ -45,7 +45,6 @@ dependencies:
   flutter_i18n: ^0.18.0
   stripe_payment: ^1.0.7
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -9,7 +9,7 @@ admin.initializeApp(config.firebase);
 export const createPaymentIntent = functions.https.onCall((data, context) => {
 
   const db = admin.firestore();
-  db.settings({ timestampInSnapshots: true })
+  db.settings({ timestampInSnapshots: true });
   const stripe = new Stripe(config.stripe.key, {
     apiVersion: '2020-03-02',
   });
@@ -20,3 +20,18 @@ export const createPaymentIntent = functions.https.onCall((data, context) => {
     payment_method_types: ['card'],
   });
 });
+
+
+export const createAccount = functions.https.onCall(async (data, context) => {
+  const stripe = new Stripe(config.stripe.key, {
+    apiVersion: '2020-03-02',
+  });
+
+  const email = context.auth?.token?.email;
+
+  return stripe.accounts.create({
+    type: 'standard',
+    country: 'FR',
+    email: email,
+  });
+})

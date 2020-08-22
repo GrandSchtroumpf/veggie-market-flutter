@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../payement/connect.dart';
 import '../intl.dart';
 import '../service-provider.dart';
 import '../seller/model.dart';
@@ -19,17 +20,22 @@ class SellerEdit extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
           final seller = snaphot.data;
-          return SellerForm(
-            seller: seller,
-            onSubmit: (Seller seller) async {
-              if (seller.file != null) {
-                final task = await service.upload(seller.id, seller.file);
-                final snapshot = await task.onComplete;
-                seller.image = await snapshot.ref.getDownloadURL();
-              }
-              await service.updateDoc(seller);
-              Navigator.pop(context);
-            },
+          return Column(
+            children: [
+              SellerForm(
+                seller: seller,
+                onSubmit: (Seller seller) async {
+                  if (seller.file != null) {
+                    final task = await service.upload(seller.id, seller.file);
+                    final snapshot = await task.onComplete;
+                    seller.image = await snapshot.ref.getDownloadURL();
+                  }
+                  await service.updateDoc(seller);
+                  Navigator.pop(context);
+                },
+              ),
+              StripeConnect(),
+            ],
           );
         },
       ),

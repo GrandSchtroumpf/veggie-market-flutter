@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'payement/service.dart';
 import 'seller/service.dart';
 import 'product/service.dart';
 import 'order/service.dart';
@@ -17,6 +18,7 @@ class ServiceProvider extends InheritedWidget {
   final product = ProductService();
   final order = OrderService();
   final bucket = Bucket();
+  final payment = PaymentService();
 
   ServiceProvider({Key key, @required Widget child})
       : super(key: key, child: child) {
